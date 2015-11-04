@@ -3,7 +3,7 @@ package Game.entities;
 /**
  * Created by Siderov on 4.11.2015 г..
  */
-public class BoundingBox {
+public abstract class BoundingBox {
 
 
     private static Integer x;
