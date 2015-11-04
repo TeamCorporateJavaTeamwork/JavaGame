@@ -55,9 +55,25 @@ public class Game implements Runnable{
     public void run() {
         this.init();
 
+        int fps = 30;
+        double timePerTick = 1_000_000_000.0 / fps;
+        double delta = 0;
+
+        long timeNow;
+        long lastTime = System.nanoTime();
+
         while(isRunning) {
-            this.tick();
-            this.render();
+            timeNow = System.nanoTime();
+
+            delta += (timeNow - lastTime) / timePerTick;
+
+            lastTime = timeNow;
+
+            if(delta >= 1) {
+                this.tick();
+                this.render();
+                delta--;
+            }
         }
 
         this.stop();
