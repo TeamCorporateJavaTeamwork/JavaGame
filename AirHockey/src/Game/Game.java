@@ -2,21 +2,25 @@ package Game;
 
 import display.Display;
 
-public class Game implements Runnable{
-    private Display display;
-    private Thread thread;
+import java.awt.*;
+import java.awt.image.BufferStrategy;
 
-    private boolean isRunning;
+public class Game implements Runnable{
     private String title;
+
+    private Display display;
+    private BufferStrategy bs;
+    private Graphics g;
+
+    private Thread thread;
+    private boolean isRunning;
 
     public Game(String name) {
         this.title = name;
-
     }
 
     private void init() {
         this.display = new Display(this.title);
-
     }
 
     private void tick() {
@@ -24,7 +28,24 @@ public class Game implements Runnable{
     }
 
     private void render() {
+        this.bs = this.display.getCanvas().getBufferStrategy();
 
+        if(this.bs == null) {
+            this.display.getCanvas().createBufferStrategy(2);
+            return;
+        }
+
+        this.g = this.bs.getDrawGraphics();
+
+        g.clearRect(0, 0, this.display.WIDTH, this.display.HEIGHT);
+
+        //Start Drawing
+
+
+        //Stop Drawing
+
+        this.g.dispose();
+        this.bs.show();
     }
 
     @Override

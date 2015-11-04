@@ -5,8 +5,8 @@ import java.awt.*;
 
 public class Display {
 
-    private final int WIDTH = 800;
-    private final int HEIGHT = 600;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
 
     String name;
     private JFrame frame;
@@ -18,6 +18,10 @@ public class Display {
         init();
     }
 
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
     private void init() {
         this.frame = new JFrame(name);
         this.frame.setVisible(true);
@@ -26,6 +30,9 @@ public class Display {
         this.frame.setMaximumSize(new Dimension(WIDTH, HEIGHT));
         this.frame.setFocusable(true);
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        this.frame.setResizable(false);
+        this.frame.setLocationRelativeTo(null);
 
         this.canvas = new Canvas();
 
