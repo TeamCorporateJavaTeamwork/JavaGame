@@ -1,6 +1,7 @@
 package Game;
 
 import display.Display;
+import gfx.ImageLoader;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -41,6 +42,7 @@ public class Game implements Runnable{
 
         //Start Drawing
 
+        g.drawImage(ImageLoader.loadImage("/Textures/hockey field.png"), 0, 0, 800, 600, null);
 
         //Stop Drawing
 
