@@ -5,8 +5,8 @@ import java.awt.*;
 
 public class Display {
 
-    public static final int WIDTH = 800;
-    public static final int HEIGHT = 600;
+    public static final int WIDTH = 1200;
+    public static final int HEIGHT = 800;
 
     String name;
     private JFrame frame;

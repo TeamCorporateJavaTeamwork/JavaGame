@@ -42,7 +42,7 @@ public class Game implements Runnable{
 
         //Start Drawing
 
-        g.drawImage(ImageLoader.loadImage("/Textures/hockey field.png"), 0, 0, 800, 600, null);
+        g.drawImage(ImageLoader.loadImage("/Textures/hockey field.png"), 180, 80, 800, 600, null);
 
         //Stop Drawing
 
