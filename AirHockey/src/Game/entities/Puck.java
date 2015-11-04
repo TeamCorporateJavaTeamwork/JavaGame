@@ -5,10 +5,11 @@ import gfx.Assets;
 import java.awt.*;
 
 public class Puck {
-    private static int posX, posY, size, dirX, dirY, velocityX, velocityY, weight;
+    private static int posX, posY, size, dirX, dirY, weight;
     private static final int SPEED_LIMIT = 5;
-    private static boolean isMovingUp, isMovingLeft, isMovingDown, isMovingRight;
-
+    public static boolean isMovingUp, isMovingLeft, isMovingDown, isMovingRight;
+    public static int velocityX;
+    public static int velocityY;
     //bounding box
     // will implement after custom bounding
     // class is finished
@@ -21,10 +22,11 @@ public class Puck {
         this.dirY = 0;
 
         this.velocityX = 0;
+
         this.velocityY = 0;
 
         this.weight = 5;
-        this.size = 140;
+        this.size = 20;
 
         this.isMovingUp = false;
         this.isMovingDown = false;

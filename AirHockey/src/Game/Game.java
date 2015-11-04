@@ -13,11 +13,12 @@ public class Game implements Runnable{
     private Display display;
     private BufferStrategy bs;
     private Graphics g;
+    private InputHandler inputHandler;
 
     private Thread thread;
     private boolean isRunning;
 
-    private Puck puck;
+    public static Puck puck;
 
     public Game(String name) {
         this.title = name;
@@ -26,12 +27,13 @@ public class Game implements Runnable{
     private void init() {
         Assets.init();
         this.display = new Display(this.title);
+        this.inputHandler = new InputHandler(this.display);
 
         this.puck = new Puck();
     }
 
     private void tick() {
-
+        puck.tick();
     }
 
     private void render() {

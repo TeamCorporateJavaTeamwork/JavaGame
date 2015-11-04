@@ -19,7 +19,7 @@ public class Display {
     }
 
     public Canvas getCanvas() {
-        return canvas;
+        return this.canvas;
     }
 
     private void init() {
