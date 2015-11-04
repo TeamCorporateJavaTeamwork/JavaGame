@@ -14,8 +14,8 @@ public class Puck {
     // class is finished
 
     public Puck() {
-        this.posX = 510;
-        this.posY = 315;
+        this.posX = 300;
+        this.posY = 150;
 
         this.dirX = 0;
         this.dirY = 0;
@@ -52,6 +52,6 @@ public class Puck {
     }
 
     public void render(Graphics g) {
-        g.drawImage(Assets.resizeImg(Assets.puck, size, size), this.posX, this.posY, null);
+        g.drawImage(Assets.puck, this.posX, this.posY, null);
     }
 }
