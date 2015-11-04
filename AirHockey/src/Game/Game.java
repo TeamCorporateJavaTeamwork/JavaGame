@@ -1,7 +1,7 @@
 package Game;
 
 import display.Display;
-import gfx.ImageLoader;
+import gfx.Assets;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -21,6 +21,7 @@ public class Game implements Runnable{
     }
 
     private void init() {
+        Assets.init();
         this.display = new Display(this.title);
     }
 
@@ -42,7 +43,7 @@ public class Game implements Runnable{
 
         //Start Drawing
 
-        g.drawImage(ImageLoader.loadImage("/Textures/hockey field.png"), 180, 80, 800, 600, null);
+        g.drawImage(Assets.background, 180, 80, 800, 600, null);
 
         //Stop Drawing
 
