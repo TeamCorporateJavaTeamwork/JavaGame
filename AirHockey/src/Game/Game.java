@@ -1,5 +1,6 @@
 package Game;
 
+import Game.entities.Puck;
 import display.Display;
 import gfx.Assets;
 
@@ -16,6 +17,8 @@ public class Game implements Runnable{
     private Thread thread;
     private boolean isRunning;
 
+    private Puck puck;
+
     public Game(String name) {
         this.title = name;
     }
@@ -23,6 +26,8 @@ public class Game implements Runnable{
     private void init() {
         Assets.init();
         this.display = new Display(this.title);
+
+        this.puck = new Puck();
     }
 
     private void tick() {
@@ -44,6 +49,7 @@ public class Game implements Runnable{
         //Start Drawing
 
         g.drawImage(Assets.background, 180, 80, 800, 600, null);
+        puck.render(g);
 
         //Stop Drawing
 
