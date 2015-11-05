@@ -7,13 +7,13 @@ import java.awt.*;
 
 public class Mallet{
     private String name;
-    private int score;
+    public int score;
     public int posX, posY;      //public because of bounding box check => make getter and setter
     public int radius;          //public because of bounding box check => make getter and setter
     private int weight;
     public int velocityX, velocityY; // constant for now
     private final int SPEED_LIMIT = 8;
-
+    public BoundingBox gate;
     private BoundingBox board;
     public boolean isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
 
@@ -36,10 +36,12 @@ public class Mallet{
         this.isMovingUp = false;
 
         if(field ==1) {
-            this.board = new BoundingBox(180+28, 80+53, 372, 600-105); // startingpoint of background
+            this.gate = new BoundingBox(180+30,80+190,0,410-190);
+            this.board = new BoundingBox(180+29, 80+53, 372, 600-105); // startingpoint of background
         }
         else if(field ==2){
-            this.board = new BoundingBox(180+400, 80+53, 372, 600-105); //startingpoint of background + half the field
+            this.gate = new BoundingBox(180+800-30,80+190,0,410 - 190);
+            this.board = new BoundingBox(180+400, 80+53, 371, 600-105); //startingpoint of background + half the field
         }
     }
 
@@ -156,6 +158,21 @@ public class Mallet{
                         *fy));
             }
         }
+    }
+    public void reset(Integer playerNum){
+        if(playerNum==1){
+            this.posX=250;
+        }
+        else if(playerNum ==2){
+            this.posX=800;
+        }
+        this.posY=325;
+
+        this.isMovingDown = false;
+        this.isMovingLeft = false;
+        this.isMovingRight = false;
+        this.isMovingUp = false;
+
     }
 
     public void renderBlue(Graphics g) {

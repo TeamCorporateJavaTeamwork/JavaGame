@@ -1,12 +1,13 @@
 package Game.entities;
 
+import Game.Game;
 import gfx.Assets;
 
 import java.awt.*;
 
 public class Puck {
     private static final int SPEED_LIMIT = 8;
-    public static boolean hitUpperWall, hitDownWall, hitLeftWall, hitRightWall;
+    public static boolean isMovingUp, isMovingLeft, isMovingDown, isMovingRight;
     public  int velocityX;
     public  int velocityY;
     public static int radius;
@@ -25,75 +26,85 @@ public class Puck {
         this.weight = 5;
         this.radius = 30;
 
-        this.hitUpperWall = false;
-        this.hitDownWall = false;
-        this.hitLeftWall = false;
-        this.hitRightWall = false;
+        this.isMovingUp = false;
+        this.isMovingDown = false;
+        this.isMovingLeft = false;
+        this.isMovingRight = false;
 
         this.board=new BoundingBox(180+29,80+52,800-52,600-105);
     }
 
     public void tick() {
-
-        if(hitUpperWall) {
+        //collision with board
+        //we define a circle by the most top left point of the smallest rectangle that can engulf the circle
+        //top
+        if(this.posY<this.board.getTopY()){
+            this.posY=this.board.getTopY()+1;
             if (velocityY>SPEED_LIMIT)
                 velocityY = SPEED_LIMIT;
             if (velocityX>SPEED_LIMIT)
                 velocityX = SPEED_LIMIT;
             velocityY = -velocityY;
-            hitUpperWall = false;
         }
-        if(hitDownWall) {
+        //bottom
+        if(this.posY+2*radius>this.board.getBottomY()){
+            this.posY=this.board.getBottomY()-2*radius -1;
             if (velocityY>SPEED_LIMIT)
                 velocityY = SPEED_LIMIT;
             if (velocityX>SPEED_LIMIT)
                 velocityX = SPEED_LIMIT;
             velocityY = -velocityY;
-            hitDownWall = false;
         }
-        if(hitLeftWall) {
-            if (velocityY>SPEED_LIMIT)
-                velocityY = SPEED_LIMIT;
-            if (velocityX>SPEED_LIMIT)
-                velocityX = SPEED_LIMIT;
-            velocityX = -velocityX;
-            hitLeftWall = false;
+        //left
+        if(this.posX<=this.board.getLeftX()){
+            if(this.posY>=Game.player1.gate.getTopY() && this.posY<=Game.player1.gate.getBottomY()){
+                Game.player2.score++;
+                System.out.println(Game.player2.score);
+                Game.resetPositions();
+                //game reset;
+            }
+            else{
+                this.posX=this.board.getLeftX()+1;
+                if (velocityY>SPEED_LIMIT)
+                    velocityY = SPEED_LIMIT;
+                if (velocityX>SPEED_LIMIT)
+                    velocityX = SPEED_LIMIT;
+                velocityX = -velocityX;
+            }
         }
-        if(hitRightWall) {
-            if (velocityY>SPEED_LIMIT)
-                velocityY = SPEED_LIMIT;
-            if (velocityX>SPEED_LIMIT)
-                velocityX = SPEED_LIMIT;
-            velocityX = -velocityX;
-            hitRightWall = false;
+        //right
+        if(this.posX+2*radius>this.board.getRightX()){
+            if(this.posY>=Game.player2.gate.getTopY() && this.posY<=Game.player2.gate.getBottomY()){
+                Game.player1.score++;
+                System.out.println(Game.player1.score);
+                Game.resetPositions();
+                //game reset;
+            }
+            else {
+                this.posX=this.board.getRightX()-2*radius-1;
+                if (velocityY>SPEED_LIMIT)
+                    velocityY = SPEED_LIMIT;
+                if (velocityX>SPEED_LIMIT)
+                    velocityX = SPEED_LIMIT;
+                velocityX = -velocityX;
+            }
         }
 
         this.posX += velocityX;
         this.posY += velocityY;
+    }
 
-        //collision with board
-        //we define a circle by the most top left point of the smallest rectangle that can engulf the circle
-        //if mallet X exceeds maxX allowed then we put it at the right border
-        if(this.posX+2*radius>this.board.getRightX()){
-            this.posX=this.board.getRightX()-2*radius-1;
-            this.hitRightWall = true;
-        }
-        //if mallet X is less than allowed - put mallet at left border;
-        if(this.posX<this.board.getLeftX()){
-            this.posX=this.board.getLeftX()+1;
-            this.hitLeftWall = true;
-        }
-        // if mallet y is less than allowed( is above board) put it at top border;
-        if(this.posY<this.board.getTopY()){
-            this.posY=this.board.getTopY()+1;
-            this.hitUpperWall = true;
-        }
-        //if mallet y is more than allowed ( is below board) put it at bottom border;
-        if(this.posY+2*radius>this.board.getBottomY()){
-            this.posY=this.board.getBottomY()-2*radius -1;
-            this.hitDownWall = true;
-        }
+    public void reset(){
+        this.posX = 550;
+        this.posY = 350;
 
+        this.velocityX = 0;
+        this.velocityY = 0;
+
+        this.isMovingUp = false;
+        this.isMovingDown = false;
+        this.isMovingLeft = false;
+        this.isMovingRight = false;
     }
 
     public void render(Graphics g) {

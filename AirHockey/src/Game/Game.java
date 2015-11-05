@@ -43,6 +43,11 @@ public class Game implements Runnable{
         player2.tick();
         puck.tick();
     }
+    public static void resetPositions(){
+        player1.reset(1);
+        player2.reset(2);
+        puck.reset();
+    }
 
     private void render() {
         this.bs = this.display.getCanvas().getBufferStrategy();
