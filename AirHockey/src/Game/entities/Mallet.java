@@ -56,11 +56,28 @@ public class Mallet{
                 playerY + radius + puckRadius > puckY
                 && playerY < puckY + radius + puckRadius) {
             double distance = Math.sqrt(((playerX - puckX) * (playerX - puckX) +
-                                        (playerY - puckY) * (playerY - puckY)));
+                    (playerY - puckY) * (playerY - puckY)));
 
             if (distance < radius + puckRadius) {
                 System.out.println("Balls collided");
-                System.out.println("mallet X, Y:" + playerX + " " + playerY);
+                System.out.println("mallet BLUE X, Y:" + playerX + " " + playerY);
+                System.out.println("puck X, Y:" + puckX + " " + puckY);
+            }
+        }
+
+        playerX = Game.player2.posX + radius;
+        playerY = Game.player2.posY + radius;
+
+        if (playerX + radius + puckRadius > puckX &&
+                playerX < puckX + radius + puckRadius &&
+                playerY + radius + puckRadius > puckY
+                && playerY < puckY + radius + puckRadius) {
+            double distance = Math.sqrt(((playerX - puckX) * (playerX - puckX) +
+                    (playerY - puckY) * (playerY - puckY)));
+
+            if (distance < radius + puckRadius) {
+                System.out.println("Balls collided");
+                System.out.println("mallet RED X, Y:" + playerX + " " + playerY);
                 System.out.println("puck X, Y:" + puckX + " " + puckY);
             }
         }
