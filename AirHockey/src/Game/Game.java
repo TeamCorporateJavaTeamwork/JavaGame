@@ -1,5 +1,6 @@
 package Game;
 
+import Game.entities.Mallet;
 import Game.entities.Puck;
 import display.Display;
 import gfx.Assets;
@@ -19,6 +20,8 @@ public class Game implements Runnable{
     private boolean isRunning;
 
     public static Puck puck;
+    public static Mallet player1;
+    public static Mallet player2;
 
     public Game(String name) {
         this.title = name;
@@ -30,9 +33,13 @@ public class Game implements Runnable{
         this.inputHandler = new InputHandler(this.display);
 
         this.puck = new Puck();
+        this.player1 = new Mallet("Gosho", 250, 325);
+        this.player2 = new Mallet("Pesho", 800, 325);
     }
 
     private void tick() {
+        player1.tick();
+        player2.tick();
         puck.tick();
     }
 
@@ -51,6 +58,9 @@ public class Game implements Runnable{
         //Start Drawing
 
         g.drawImage(Assets.background, 180, 80, 800, 600, null);
+
+        player1.renderBlue(g);
+        player2.renderRed(g);
         puck.render(g);
 
         //Stop Drawing
