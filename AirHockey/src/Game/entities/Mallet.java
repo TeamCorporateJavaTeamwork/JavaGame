@@ -8,14 +8,16 @@ import java.awt.*;
 public class Mallet{
     private String name;
     private int score;
-    private int posX, posY;
-    private int radius;
+    public int posX, posY;      //public because of bounding box check => make getter and setter
+    public int radius;          //public because of bounding box check => make getter and setter
     private int weight;
     public int velocityX, velocityY; // constant for now
     private final int SPEED_LIMIT = 6;
+
+    private BoundingBox board;
     public boolean isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
 
-    public Mallet (String name, int posX, int posY) {
+    public Mallet (String name, int posX, int posY,int field) {
         this.name = name;
         this.score = 0;
 
@@ -32,6 +34,13 @@ public class Mallet{
         this.isMovingLeft = false;
         this.isMovingRight = false;
         this.isMovingUp = false;
+
+        if(field ==1) {
+            this.board = new BoundingBox(180+28, 80+53, 372, 600-105); // startingpoint of background
+        }
+        else if(field ==2){
+            this.board = new BoundingBox(180+400, 80+53, 372, 600-105); //startingpoint of background + half the field
+        }
     }
 
     public void tick() {
@@ -84,6 +93,25 @@ public class Mallet{
                         *fy));
             }
         }
+        //collision with board
+        //we define a circle by the most top left point of the smallest rectangle that can engulf the circle
+        //if mallet X exceeds maxX allowed then we put it at the right border
+        if(this.posX+2*radius>this.board.getRightX()){
+            this.posX=this.board.getRightX()-2*radius-1;
+        }
+        //if mallet X is less than allowed - put mallet at left border;
+        if(this.posX<this.board.getLeftX()){
+            this.posX=this.board.getLeftX()+1;
+        }
+        // if mallet y is less than allowed( is above board) put it at top border;
+        if(this.posY<this.board.getTopY()){
+            this.posY=this.board.getTopY()+1;
+        }
+        //if mallet y is more than allowed ( is below board) put it at bottom border;
+        if(this.posY+2*radius>this.board.getBottomY()){
+            this.posY=this.board.getBottomY()-2*radius -1;
+        }
+
 
         puckSpeedX = Game.puck.velocityX;
         puckSpeedY = Game.puck.velocityY;

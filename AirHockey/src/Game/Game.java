@@ -1,5 +1,6 @@
 package Game;
 
+import Game.entities.BoundingBox;
 import Game.entities.Mallet;
 import Game.entities.Puck;
 import display.Display;
@@ -33,8 +34,8 @@ public class Game implements Runnable{
         this.inputHandler = new InputHandler(this.display);
 
         this.puck = new Puck();
-        this.player1 = new Mallet("Gosho", 250, 325);
-        this.player2 = new Mallet("Pesho", 800, 325);
+        this.player1 = new Mallet("Gosho", 250, 325,1);
+        this.player2 = new Mallet("Pesho", 800, 325,2);
     }
 
     private void tick() {
