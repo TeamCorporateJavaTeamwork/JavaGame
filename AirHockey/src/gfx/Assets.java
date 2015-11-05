@@ -11,8 +11,8 @@ public class Assets {
 
     public static void init() {
         background = ImageLoader.loadImage("/Textures/hockey field.png");
-        redPlayer = ImageLoader.loadImage("/Textures/red mallet.png");
-        bluePlayer = ImageLoader.loadImage("/Textures/blue mallet.png");
+        redPlayer = ImageLoader.loadImage("/Textures/red-mallet.png");
+        bluePlayer = ImageLoader.loadImage("/Textures/blue-mallet.png");
         puck = ImageLoader.loadImage("/Textures/puck.png");
     }
 }

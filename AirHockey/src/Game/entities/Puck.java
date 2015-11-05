@@ -5,35 +5,28 @@ import gfx.Assets;
 import java.awt.*;
 
 public class Puck {
-    private static int posX, posY, size, dirX, dirY, weight;
+    private static int posX, posY, radius, weight;
     private static final int SPEED_LIMIT = 5;
     public static boolean isMovingUp, isMovingLeft, isMovingDown, isMovingRight;
     public static int velocityX;
     public static int velocityY;
-    //bounding box
-    // will implement after custom bounding
-    // class is finished
 
     public Puck() {
-        this.posX = 300;
-        this.posY = 150;
-
-        this.dirX = 0;
-        this.dirY = 0;
+        this.posX = 550;
+        this.posY = 350;
 
         this.velocityX = 0;
 
         this.velocityY = 0;
 
         this.weight = 5;
-        this.size = 20;
+        this.radius = 30;
 
         this.isMovingUp = false;
         this.isMovingDown = false;
         this.isMovingLeft = false;
         this.isMovingRight = false;
 
-        //boundingbox to implement
     }
 
     public void tick() {
