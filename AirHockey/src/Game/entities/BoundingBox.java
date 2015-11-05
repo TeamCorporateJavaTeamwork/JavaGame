@@ -33,7 +33,7 @@ public class BoundingBox {
     }
 
     //this method now has an overload for when we access it with a puck rather than a mallet
-    // this shoult be corrected => access it only with object from class circle with diff radius
+    // this should be corrected => access it only with object from class circle with diff radius
 //    public void keepInBoundaries(Mallet mallet){
 //        //we define a circle by the most top left point of the smallest rectangle that can engulf the circle
 //        //if mallet X exceeds maxX allowed then we put it at the right border

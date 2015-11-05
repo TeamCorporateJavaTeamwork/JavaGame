@@ -12,7 +12,7 @@ public class Mallet{
     public int radius;          //public because of bounding box check => make getter and setter
     private int weight;
     public int velocityX, velocityY; // constant for now
-    private final int SPEED_LIMIT = 6;
+    private final int SPEED_LIMIT = 8;
 
     private BoundingBox board;
     public boolean isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
@@ -24,8 +24,8 @@ public class Mallet{
         this.posX = posX;
         this.posY = posY;
 
-        this.velocityX = 3; // constant for now
-        this.velocityY = 3; // constant for now
+        this.velocityX = 5; // constant for now
+        this.velocityY = 5; // constant for now
 
         this.radius = 49;
         this.weight = 5;
@@ -87,6 +87,11 @@ public class Mallet{
                 fx = dx/dist;
                 fy = dy/dist;
 
+                if (puckSpeedX > SPEED_LIMIT)
+                    puckSpeedX = SPEED_LIMIT;
+                if (puckSpeedY > SPEED_LIMIT)
+                    puckSpeedY = SPEED_LIMIT;
+
                 Game.puck.velocityX = (int)(puckSpeedX + ((1.05 * (radius + puckRadius) - dist)
                         *fx));
                 Game.puck.velocityY = (int)(puckSpeedY + ((1.05 *(radius + puckRadius) - dist)
@@ -139,6 +144,11 @@ public class Mallet{
                 double dist = Math.sqrt(dx*dx + dy*dy); // norm of (dx, dy)
                 fx = dx/dist;
                 fy = dy/dist;
+
+                if (puckSpeedX > SPEED_LIMIT)
+                    puckSpeedX = SPEED_LIMIT;
+                if (puckSpeedY > SPEED_LIMIT)
+                    puckSpeedY = SPEED_LIMIT;
 
                 Game.puck.velocityX = (int)(puckSpeedX + ((1.05 * (radius + puckRadius) - dist)
                         *fx));
