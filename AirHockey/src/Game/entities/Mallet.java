@@ -10,7 +10,9 @@ public class Mallet{
     private int score;
     private int posX, posY;
     private int radius;
+    private int weight;
     public int velocityX, velocityY; // constant for now
+    private final int SPEED_LIMIT = 6;
     public boolean isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
 
     public Mallet (String name, int posX, int posY) {
@@ -24,6 +26,7 @@ public class Mallet{
         this.velocityY = 3; // constant for now
 
         this.radius = 49;
+        this.weight = 5;
 
         this.isMovingDown = false;
         this.isMovingLeft = false;
@@ -48,6 +51,8 @@ public class Mallet{
         int puckRadius = Game.puck.radius;
         int puckX = Game.puck.posX + puckRadius;
         int puckY = Game.puck.posY + puckRadius;
+        int puckSpeedX = Game.puck.velocityX;
+        int puckSpeedY = Game.puck.velocityY;
         int playerX = Game.player1.posX + radius;
         int playerY = Game.player1.posY + radius;
 
@@ -62,9 +67,26 @@ public class Mallet{
                 System.out.println("Balls collided");
                 System.out.println("mallet BLUE X, Y:" + playerX + " " + playerY);
                 System.out.println("puck X, Y:" + puckX + " " + puckY);
+
+                double dx, dy, fx, fy;
+
+                dx = puckX - playerX; // distance between centers in x
+                dy = puckY - playerY; // distance between centers in y
+
+                // define unit-length vector (fx, fy) in direction of the force
+                double dist = Math.sqrt(dx*dx + dy*dy); // norm of (dx, dy)
+                fx = dx/dist;
+                fy = dy/dist;
+
+                Game.puck.velocityX = (int)(puckSpeedX + ((1.05 * (radius + puckRadius) - dist)
+                        *fx));
+                Game.puck.velocityY = (int)(puckSpeedY + ((1.05 *(radius + puckRadius) - dist)
+                        *fy));
             }
         }
 
+        puckSpeedX = Game.puck.velocityX;
+        puckSpeedY = Game.puck.velocityY;
         playerX = Game.player2.posX + radius;
         playerY = Game.player2.posY + radius;
 
@@ -79,6 +101,21 @@ public class Mallet{
                 System.out.println("Balls collided");
                 System.out.println("mallet RED X, Y:" + playerX + " " + playerY);
                 System.out.println("puck X, Y:" + puckX + " " + puckY);
+
+                double dx, dy, fx, fy;
+
+                dx = puckX - playerX; // distance between centers in x
+                dy = puckY - playerY; // distance between centers in y
+
+                // define unit-length vector (fx, fy) in direction of the force
+                double dist = Math.sqrt(dx*dx + dy*dy); // norm of (dx, dy)
+                fx = dx/dist;
+                fy = dy/dist;
+
+                Game.puck.velocityX = (int)(puckSpeedX + ((1.05 * (radius + puckRadius) - dist)
+                        *fx));
+                Game.puck.velocityY = (int)(puckSpeedY + ((1.05 *(radius + puckRadius) - dist)
+                        *fy));
             }
         }
     }

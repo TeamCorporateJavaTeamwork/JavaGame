@@ -7,8 +7,8 @@ import java.awt.*;
 public class Puck {
     private static final int SPEED_LIMIT = 5;
     public static boolean isMovingUp, isMovingLeft, isMovingDown, isMovingRight;
-    public static int velocityX;
-    public static int velocityY;
+    public  int velocityX;
+    public  int velocityY;
     public static int radius;
     public static int posX, posY, weight;
 
@@ -32,20 +32,10 @@ public class Puck {
     }
 
     public void tick() {
-        //to implement the movement after input handling
 
-        if (isMovingUp) {
-            this.posY -= velocityY;
-        }
-        if (isMovingLeft) {
-            this.posX -= velocityX;
-        }
-        if (isMovingDown) {
-            this.posY += velocityY;
-        }
-        if (isMovingRight) {
-            this.posX += velocityX;
-        }
+        this.posX += velocityX;
+        this.posY += velocityY;
+
     }
 
     public void render(Graphics g) {
