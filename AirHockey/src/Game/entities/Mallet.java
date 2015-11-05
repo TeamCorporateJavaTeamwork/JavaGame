@@ -8,8 +8,9 @@ import java.awt.*;
 public class Mallet{
     private String name;
     public int score;
-    public int posX, posY;      //public because of bounding box check => make getter and setter
-    public int radius;          //public because of bounding box check => make getter and setter
+
+    private int posX, posY;      //public because of bounding box check => make getter and setter
+    private int radius;          //public because of bounding box check => make getter and setter
     private int weight;
     public int velocityX, velocityY; // constant for now
     private final int SPEED_LIMIT = 8;
@@ -75,9 +76,10 @@ public class Mallet{
                     (playerY - puckY) * (playerY - puckY)));
 
             if (distance < radius + puckRadius) {
-                System.out.println("Balls collided");
-                System.out.println("mallet BLUE X, Y:" + playerX + " " + playerY);
-                System.out.println("puck X, Y:" + puckX + " " + puckY);
+                //Debugging comments ->>
+                //System.out.println("Balls collided");
+                //System.out.println("mallet BLUE X, Y:" + playerX + " " + playerY);
+                //System.out.println("puck X, Y:" + puckX + " " + puckY);
 
                 double dx, dy, fx, fy;
 
@@ -133,9 +135,10 @@ public class Mallet{
                     (playerY - puckY) * (playerY - puckY)));
 
             if (distance < radius + puckRadius) {
-                System.out.println("Balls collided");
-                System.out.println("mallet RED X, Y:" + playerX + " " + playerY);
-                System.out.println("puck X, Y:" + puckX + " " + puckY);
+                //Debugging comments ->>
+//                System.out.println("Balls collided");
+//                System.out.println("mallet RED X, Y:" + playerX + " " + playerY);
+//                System.out.println("puck X, Y:" + puckX + " " + puckY);
 
                 double dx, dy, fx, fy;
 
@@ -159,6 +162,7 @@ public class Mallet{
             }
         }
     }
+
     public void reset(Integer playerNum){
         if(playerNum==1){
             this.posX=250;

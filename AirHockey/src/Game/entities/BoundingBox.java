@@ -1,10 +1,5 @@
 package Game.entities;
 
-import Game.Game;
-
-/**
- * Created by Siderov on 4.11.2015 г..
- */
 //This class defines the board boundaries
 public class BoundingBox {
     private Integer topY;
@@ -14,7 +9,7 @@ public class BoundingBox {
 
     public BoundingBox(Integer boxStartingPointX, Integer boxStartingPointY, Integer boxWidth, Integer boxHeight) {
         this.topY = boxStartingPointY;
-        this.bottomY =boxStartingPointY+boxHeight;
+        this.bottomY = boxStartingPointY+boxHeight;
         this.leftX = boxStartingPointX;
         this.rightX = boxStartingPointX + boxWidth;
     }

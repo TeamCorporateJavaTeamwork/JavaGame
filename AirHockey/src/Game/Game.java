@@ -1,11 +1,11 @@
 package Game;
 
-import Game.entities.BoundingBox;
 import Game.entities.Mallet;
 import Game.entities.Puck;
 import display.Display;
 import gfx.Assets;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
@@ -33,9 +33,10 @@ public class Game implements Runnable{
         this.display = new Display(this.title);
         this.inputHandler = new InputHandler(this.display);
 
+        this.player1 = new Mallet(getPlayerName(1), 250, 325,1);
+        this.player2 = new Mallet(getPlayerName(2), 800, 325,2);
         this.puck = new Puck();
-        this.player1 = new Mallet("Gosho", 250, 325,1);
-        this.player2 = new Mallet("Pesho", 800, 325,2);
+
     }
 
     private void tick() {
@@ -117,5 +118,14 @@ public class Game implements Runnable{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private String getPlayerName(int player) {
+        String playerName;
+        do {
+            playerName = JOptionPane.showInputDialog("Please enter player " + player + " name:", "Player " + player);
+        } while (playerName == null || playerName.equals("") || playerName.equals(" "));
+
+        return playerName;
     }
 }
