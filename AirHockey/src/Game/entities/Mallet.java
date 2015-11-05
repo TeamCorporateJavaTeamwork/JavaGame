@@ -46,10 +46,10 @@ public class Mallet{
         }
 
         int puckRadius = Game.puck.radius;
-        int puckX = Game.puck.posX - radius;
-        int puckY = Game.puck.posY - radius;
-        int playerX = Game.player1.posX - radius;
-        int playerY = Game.player1.posY - radius;
+        int puckX = Game.puck.posX + puckRadius;
+        int puckY = Game.puck.posY + puckRadius;
+        int playerX = Game.player1.posX + radius;
+        int playerY = Game.player1.posY + radius;
 
         if (playerX + radius + puckRadius > puckX &&
                 playerX < puckX + radius + puckRadius &&
@@ -60,6 +60,8 @@ public class Mallet{
 
             if (distance < radius + puckRadius) {
                 System.out.println("Balls collided");
+                System.out.println("mallet X, Y:" + playerX + " " + playerY);
+                System.out.println("puck X, Y:" + puckX + " " + puckY);
             }
         }
     }
