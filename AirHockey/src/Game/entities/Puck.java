@@ -5,13 +5,15 @@ import gfx.Assets;
 import java.awt.*;
 
 public class Puck {
-    private static int posX, posY, radius, weight;
     private static final int SPEED_LIMIT = 5;
     public static boolean isMovingUp, isMovingLeft, isMovingDown, isMovingRight;
     public static int velocityX;
     public static int velocityY;
+    public static int radius;
+    public static int posX, posY, weight;
 
     public Puck() {
+
         this.posX = 550;
         this.posY = 350;
 

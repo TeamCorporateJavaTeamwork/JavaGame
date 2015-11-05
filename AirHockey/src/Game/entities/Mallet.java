@@ -1,5 +1,6 @@
 package Game.entities;
 
+import Game.Game;
 import gfx.Assets;
 
 import java.awt.*;
@@ -8,6 +9,7 @@ public class Mallet{
     private String name;
     private int score;
     private int posX, posY;
+    private int radius;
     public int velocityX, velocityY; // constant for now
     public boolean isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
 
@@ -20,6 +22,8 @@ public class Mallet{
 
         this.velocityX = 3; // constant for now
         this.velocityY = 3; // constant for now
+
+        this.radius = 49;
 
         this.isMovingDown = false;
         this.isMovingLeft = false;
@@ -39,6 +43,24 @@ public class Mallet{
         }
         if (isMovingLeft) {
             this.posX -= this.velocityX;
+        }
+
+        int puckRadius = Game.puck.radius;
+        int puckX = Game.puck.posX - radius;
+        int puckY = Game.puck.posY - radius;
+        int playerX = Game.player1.posX - radius;
+        int playerY = Game.player1.posY - radius;
+
+        if (playerX + radius + puckRadius > puckX &&
+                playerX < puckX + radius + puckRadius &&
+                playerY + radius + puckRadius > puckY
+                && playerY < puckY + radius + puckRadius) {
+            double distance = Math.sqrt(((playerX - puckX) * (playerX - puckX) +
+                                        (playerY - puckY) * (playerY - puckY)));
+
+            if (distance < radius + puckRadius) {
+                System.out.println("Balls collided");
+            }
         }
     }
 
