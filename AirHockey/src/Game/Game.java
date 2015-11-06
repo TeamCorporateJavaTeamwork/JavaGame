@@ -90,7 +90,7 @@ public class Game implements Runnable{
     public void run() {
         this.init();
 
-        int fps = 30;
+        int fps = 60;
         double timePerTick = 1_000_000_000.0 / fps;
         double delta = 0;
 
@@ -101,7 +101,7 @@ public class Game implements Runnable{
             timeNow = System.nanoTime();
 
             delta += (timeNow - lastTime) / timePerTick;
-            AnimationManager.tick(timeNow, lastTime);
+            AnimationManager.tick(timeNow, lastTime, player1, player2);
 
             lastTime = timeNow;
 

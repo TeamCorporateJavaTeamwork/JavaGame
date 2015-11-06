@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_airhockey" default="compile.module.airhockey">
+  <dirname property="module.airhockey.basedir" file="${ant.file.module_airhockey}"/>
+  
+  <property name="module.jdk.home.airhockey" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.airhockey" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.airhockey" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.airhockey" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="airhockey.output.dir" value="${module.airhockey.basedir}/out/production/AirHockey"/>
+  <property name="airhockey.testoutput.dir" value="${module.airhockey.basedir}/out/test/AirHockey"/>
+  
+  <path id="airhockey.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="airhockey.module.production.classpath">
+    <path refid="${module.jdk.classpath.airhockey}"/>
+    <path refid="library.resources.classpath"/>
+  </path>
+  
+  <path id="airhockey.runtime.production.module.classpath">
+    <pathelement location="${airhockey.output.dir}"/>
+    <path refid="library.resources.classpath"/>
+  </path>
+  
+  <path id="airhockey.module.classpath">
+    <path refid="${module.jdk.classpath.airhockey}"/>
+    <pathelement location="${airhockey.output.dir}"/>
+    <path refid="library.resources.classpath"/>
+  </path>
+  
+  <path id="airhockey.runtime.module.classpath">
+    <pathelement location="${airhockey.testoutput.dir}"/>
+    <pathelement location="${airhockey.output.dir}"/>
+    <path refid="library.resources.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.airhockey">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.airhockey">
+    <patternset refid="excluded.from.module.airhockey"/>
+  </patternset>
+  
+  <path id="airhockey.module.sourcepath">
+    <dirset dir="${module.airhockey.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.airhockey" depends="compile.module.airhockey.production,compile.module.airhockey.tests" description="Compile module AirHockey"/>
+  
+  <target name="compile.module.airhockey.production" depends="register.custom.compilers" description="Compile module AirHockey; production classes">
+    <mkdir dir="${airhockey.output.dir}"/>
+    <javac2 destdir="${airhockey.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.airhockey}/javac">
+      <compilerarg line="${compiler.args.airhockey}"/>
+      <bootclasspath refid="airhockey.module.bootclasspath"/>
+      <classpath refid="airhockey.module.production.classpath"/>
+      <src refid="airhockey.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.airhockey"/>
+    </javac2>
+    
+    <copy todir="${airhockey.output.dir}">
+      <fileset dir="${module.airhockey.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.airhockey.tests" depends="register.custom.compilers,compile.module.airhockey.production" description="compile module AirHockey; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.airhockey" description="cleanup module">
+    <delete dir="${airhockey.output.dir}"/>
+    <delete dir="${airhockey.testoutput.dir}"/>
+  </target>
+</project>
