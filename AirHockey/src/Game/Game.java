@@ -5,6 +5,7 @@ import Game.entities.Puck;
 import display.Display;
 import gfx.AnimationManager;
 import gfx.Assets;
+import gfx.SpriteSheet;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +26,8 @@ public class Game implements Runnable{
     public static Mallet player1;
     public static Mallet player2;
 
+    private SpriteSheet numbers;
+
     public Game(String name) {
         this.title = name;
     }
@@ -37,6 +40,8 @@ public class Game implements Runnable{
         this.player1 = new Mallet(getPlayerName(1), 250, 325,1);
         this.player2 = new Mallet(getPlayerName(2), 800, 325,2);
         this.puck = new Puck();
+
+        this.numbers = new SpriteSheet(Assets.numbers, 60, 60);
 
     }
 
@@ -70,6 +75,10 @@ public class Game implements Runnable{
         player1.renderBlue(g);
         player2.renderRed(g);
         puck.render(g);
+
+        //drawing score
+        g.drawImage(numbers.crop(player1.score, 0), 475, 10, null);
+        g.drawImage(numbers.crop(player2.score, 0), 625, 10, null);
 
         //Stop Drawing
 
