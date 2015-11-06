@@ -14,18 +14,18 @@ public class AnimationManager {
     public static void tick(long timeNow, long lastTime) {
         if(puckAnimationCondition) {
             puckAnimDelta += (timeNow - lastTime) / puckAnimTimePerTick;
-            puckAnimation();
+            if(puckAnimDelta >= 1) {
+                puckAnimation();
+            }
         }
     }
 
     private static void puckAnimation() {
-        if(puckAnimDelta >= 1) {
-            puckAnimationPos++;
-            if(puckAnimationPos > 9) {
-                puckAnimationPos = 0;
-            }
-            puckAnimDelta--;
+        puckAnimationPos++;
+        if(puckAnimationPos > 9) {
+            puckAnimationPos = 0;
         }
+        puckAnimDelta--;
     }
 
     public static void puckAnimationStop() {
@@ -34,6 +34,7 @@ public class AnimationManager {
     }
 
     public static void puckAnimationStart() {
+        puckAnimDelta = 0;
         puckAnimationCondition = true;
     }
 
