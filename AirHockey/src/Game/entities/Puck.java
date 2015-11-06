@@ -115,11 +115,11 @@ public class Puck {
     }
 
     public void render(Graphics g) {
-            //animated puck
-            g.drawImage(puckAnimation.crop(AnimationManager.puckAnimationPos, 0), this.posX - 20, this.posY - 20, null);
-            //command to stop animation: AnimationManager.puckAnimationStop();
+        //animated puck
+        g.drawImage(puckAnimation.crop(AnimationManager.puckAnimationPos, 0), this.posX - 20, this.posY - 20, null);
+        //command to stop animation: AnimationManager.puckAnimationStop();
 
-            //normal puck
-            //g.drawImage(Assets.puck, this.posX, this.posY, null);
+        //normal puck
+        //g.drawImage(Assets.puck, this.posX, this.posY, null);
     }
 }
