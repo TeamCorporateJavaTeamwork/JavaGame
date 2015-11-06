@@ -1,7 +1,9 @@
 package Game.entities;
 
 import Game.Game;
+import gfx.AnimationManager;
 import gfx.Assets;
+import gfx.SpriteSheet;
 
 import java.awt.*;
 
@@ -13,6 +15,8 @@ public class Puck {
     public static int radius;
     public static int posX, posY, weight;
     private BoundingBox board;
+
+    private SpriteSheet puckAnimation;
 
     public Puck() {
 
@@ -30,6 +34,8 @@ public class Puck {
         this.isMovingDown = false;
         this.isMovingLeft = false;
         this.isMovingRight = false;
+
+        this.puckAnimation = new SpriteSheet(Assets.puckAnim, 100, 100);
 
         this.board=new BoundingBox(180+29,80+52,800-52,600-105);
     }
@@ -92,6 +98,7 @@ public class Puck {
 
         this.posX += velocityX;
         this.posY += velocityY;
+
     }
 
     public void reset(){
@@ -108,6 +115,11 @@ public class Puck {
     }
 
     public void render(Graphics g) {
-        g.drawImage(Assets.puck, this.posX, this.posY, null);
+            //animated puck
+            g.drawImage(puckAnimation.crop(AnimationManager.puckAnimationPos, 0), this.posX - 20, this.posY - 20, null);
+            //command to stop animation: AnimationManager.puckAnimationStop();
+
+            //normal puck
+            //g.drawImage(Assets.puck, this.posX, this.posY, null);
     }
 }

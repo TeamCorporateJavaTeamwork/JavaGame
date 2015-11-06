@@ -3,6 +3,7 @@ package Game;
 import Game.entities.Mallet;
 import Game.entities.Puck;
 import display.Display;
+import gfx.AnimationManager;
 import gfx.Assets;
 
 import javax.swing.*;
@@ -91,6 +92,7 @@ public class Game implements Runnable{
             timeNow = System.nanoTime();
 
             delta += (timeNow - lastTime) / timePerTick;
+            AnimationManager.tick(timeNow, lastTime);
 
             lastTime = timeNow;
 
