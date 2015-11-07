@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class Mallet{
     private String name;
-    public int score;
+	private int score;
 
     private float posX, posY;
     private int radius;
@@ -183,10 +183,10 @@ public class Mallet{
     }
 
     public void reset(Integer playerNum){
-        if(playerNum==1){
+        if(playerNum == 1){
             this.posX=250;
         }
-        else if(playerNum ==2){
+        else if(playerNum == 2){
             this.posX=800;
         }
         this.posY=325;
@@ -204,4 +204,24 @@ public class Mallet{
     public void renderRed(Graphics g) {
         g.drawImage(Assets.redPlayer, Math.round(this.posX), Math.round(this.posY), null);
     }
+
+    public String getName() {
+
+        return name;
+    }
+
+    public void setName(String name) {
+
+        this.name = name;
+    }
+
+	public int getScore() {
+
+		return score;
+	}
+
+	public void setScore(int score) {
+
+		this.score = score;
+	}
 }
