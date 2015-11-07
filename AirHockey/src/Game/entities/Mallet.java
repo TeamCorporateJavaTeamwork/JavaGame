@@ -2,7 +2,6 @@ package Game.entities;
 
 import Game.Game;
 import gfx.Assets;
-import org.omg.CORBA.PUBLIC_MEMBER;
 
 import java.awt.*;
 
@@ -62,11 +61,11 @@ public class Mallet{
         this.velocityY += this.velocityY * slideOpposition;
 
         if(Math.abs(this.velocityX) > 3f) {
-            slideLevelX = 0.45f;
+            slideLevelX = 0.50f;
         } else if(Math.abs(this.velocityX) > 2f) {
-            slideLevelX = 0.40f;
+            slideLevelX = 0.45f;
         } else {
-            slideLevelX = 0.35f;
+            slideLevelX = 0.4f;
         }
 
         if(Math.abs(this.velocityY) > 3f) {

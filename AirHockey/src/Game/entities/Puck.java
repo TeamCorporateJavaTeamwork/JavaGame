@@ -12,7 +12,7 @@ import java.util.Random;
 //random dir on spawn towards loser
 
 public class Puck {
-    private static final int SPEED_LIMIT = 10;
+    private static final int SPEED_LIMIT = 12;
     public  double velocityX;
     public  double velocityY;
     public static int radius;
@@ -86,19 +86,15 @@ public class Puck {
             if (Math.abs(velocityY)>SPEED_LIMIT) {
                 if (velocityY < 0) {
                     velocityY = -SPEED_LIMIT;
-                    velocityY += wallFriction;
                 } else {
                     velocityY = SPEED_LIMIT;
-                    velocityY -= wallFriction;
                 }
             }
             if (Math.abs(velocityX)>SPEED_LIMIT) {
                 if (velocityX < 0) {
                     velocityX = -SPEED_LIMIT;
-                    velocityX += wallFriction;
                 } else {
                     velocityX = SPEED_LIMIT;
-                    velocityX -= wallFriction;
                 }
             }
             velocityY = -velocityY;
