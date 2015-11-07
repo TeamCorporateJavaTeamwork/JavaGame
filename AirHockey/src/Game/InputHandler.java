@@ -16,28 +16,28 @@ public class InputHandler implements KeyListener {
         int keyCode = e.getKeyCode();
 
         if (keyCode == KeyEvent.VK_UP) {
-            Game.player1.isMovingUp = true;
-        }
-        if (keyCode == KeyEvent.VK_DOWN) {
-            Game.player1.isMovingDown = true;
-        }
-        if (keyCode == KeyEvent.VK_LEFT) {
-            Game.player1.isMovingLeft = true;
-        }
-        if (keyCode == KeyEvent.VK_RIGHT) {
-            Game.player1.isMovingRight = true;
-        }
-        if (keyCode == KeyEvent.VK_W) {
             Game.player2.isMovingUp = true;
         }
-        if (keyCode == KeyEvent.VK_A) {
-            Game.player2.isMovingLeft = true;
-        }
-        if (keyCode == KeyEvent.VK_S) {
+        if (keyCode == KeyEvent.VK_DOWN) {
             Game.player2.isMovingDown = true;
         }
-        if (keyCode == KeyEvent.VK_D) {
+        if (keyCode == KeyEvent.VK_LEFT) {
+            Game.player2.isMovingLeft = true;
+        }
+        if (keyCode == KeyEvent.VK_RIGHT) {
             Game.player2.isMovingRight = true;
+        }
+        if (keyCode == KeyEvent.VK_W) {
+            Game.player1.isMovingUp = true;
+        }
+        if (keyCode == KeyEvent.VK_A) {
+            Game.player1.isMovingLeft = true;
+        }
+        if (keyCode == KeyEvent.VK_S) {
+            Game.player1.isMovingDown = true;
+        }
+        if (keyCode == KeyEvent.VK_D) {
+            Game.player1.isMovingRight = true;
         }
     }
 
@@ -52,28 +52,28 @@ public class InputHandler implements KeyListener {
         int keyCode = e.getKeyCode();
 
         if (keyCode == KeyEvent.VK_UP) {
-            Game.player1.isMovingUp = false;
-        }
-        if (keyCode == KeyEvent.VK_DOWN) {
-            Game.player1.isMovingDown = false;
-        }
-        if (keyCode == KeyEvent.VK_LEFT) {
-            Game.player1.isMovingLeft = false;
-        }
-        if (keyCode == KeyEvent.VK_RIGHT) {
-            Game.player1.isMovingRight = false;
-        }
-        if (keyCode == KeyEvent.VK_W) {
             Game.player2.isMovingUp = false;
         }
-        if (keyCode == KeyEvent.VK_A) {
-            Game.player2.isMovingLeft = false;
-        }
-        if (keyCode == KeyEvent.VK_S) {
+        if (keyCode == KeyEvent.VK_DOWN) {
             Game.player2.isMovingDown = false;
         }
-        if (keyCode == KeyEvent.VK_D) {
+        if (keyCode == KeyEvent.VK_LEFT) {
+            Game.player2.isMovingLeft = false;
+        }
+        if (keyCode == KeyEvent.VK_RIGHT) {
             Game.player2.isMovingRight = false;
+        }
+        if (keyCode == KeyEvent.VK_W) {
+            Game.player1.isMovingUp = false;
+        }
+        if (keyCode == KeyEvent.VK_A) {
+            Game.player1.isMovingLeft = false;
+        }
+        if (keyCode == KeyEvent.VK_S) {
+            Game.player1.isMovingDown = false;
+        }
+        if (keyCode == KeyEvent.VK_D) {
+            Game.player1.isMovingRight = false;
         }
     }
 }

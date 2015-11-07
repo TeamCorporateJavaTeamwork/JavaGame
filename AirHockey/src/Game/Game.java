@@ -3,7 +3,7 @@ package Game;
 import Game.entities.Mallet;
 import Game.entities.Puck;
 import display.Display;
-import gfx.AnimationManager;
+import Game.tasks.TaskManager;
 import gfx.Assets;
 import gfx.SpriteSheet;
 
@@ -28,6 +28,8 @@ public class Game implements Runnable{
 
     private SpriteSheet numbers;
 
+    private TaskManager tasks;
+
     public Game(String name) {
         this.title = name;
     }
@@ -40,6 +42,8 @@ public class Game implements Runnable{
         this.player1 = new Mallet(getPlayerName(1), 250, 325,1);
         this.player2 = new Mallet(getPlayerName(2), 800, 325,2);
         this.puck = new Puck();
+
+        tasks = new TaskManager();
 
         this.numbers = new SpriteSheet(Assets.numbers, 60, 60);
 
@@ -90,7 +94,7 @@ public class Game implements Runnable{
     public void run() {
         this.init();
 
-        int fps = 30;
+        int fps = 60;
         double timePerTick = 1_000_000_000.0 / fps;
         double delta = 0;
 
@@ -101,7 +105,7 @@ public class Game implements Runnable{
             timeNow = System.nanoTime();
 
             delta += (timeNow - lastTime) / timePerTick;
-            AnimationManager.tick(timeNow, lastTime);
+            tasks.tick(timeNow - lastTime);
 
             lastTime = timeNow;
 

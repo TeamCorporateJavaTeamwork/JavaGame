@@ -1,7 +1,7 @@
 package Game.entities;
 
 import Game.Game;
-import gfx.AnimationManager;
+import Game.tasks.TaskManager;
 import gfx.Assets;
 import gfx.SpriteSheet;
 
@@ -116,8 +116,8 @@ public class Puck {
 
     public void render(Graphics g) {
         //animated puck
-        g.drawImage(puckAnimation.crop(AnimationManager.puckAnimationPos, 0), this.posX - 20, this.posY - 20, null);
-        //command to stop animation: AnimationManager.puckAnimationStop();
+        g.drawImage(puckAnimation.crop(TaskManager.puckAnimation.position, 0), this.posX - 20, this.posY - 20, null);
+        //command to stop animation: TaskManager.puckAnimationStop();
 
         //normal puck
         //g.drawImage(Assets.puck, this.posX, this.posY, null);
