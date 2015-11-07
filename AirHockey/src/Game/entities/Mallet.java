@@ -9,16 +9,18 @@ public class Mallet{
     private String name;
     public int score;
 
-    private float posX, posY;      //public because of bounding box check => make getter and setter
-    private int radius;          //public because of bounding box check => make getter and setter
+    private float posX, posY;
+    private int radius;
     private int weight;
-    public float velocityX, velocityY; // constant for now
+    public float velocityX, velocityY;
     public float slideLevelX = 0.4f;
     public float slideLevelY = 0.4f;
     public float slideOpposition = -0.05f;
     private final int SPEED_LIMIT = 6;
+
     public BoundingBox gate;
     private BoundingBox board;
+
     public boolean isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
 
     public Mallet (String name, int posX, int posY,int field) {
@@ -40,12 +42,14 @@ public class Mallet{
         this.isMovingUp = false;
 
         if(field ==1) {
-            this.gate = new BoundingBox(180+30,80+190,0,410-190);
-            this.board = new BoundingBox(180+29, 80+53, 372, 600-105); // startingpoint of background
+                                     //(starting point of bgX + left padding,start p of bgY + top padding(topY), width, height
+            this.gate = new BoundingBox(180+30,80+190,0,405-190);
+                                    //(starting point of bgX + left padding,start p of bgY + top padding(topY), width(to center of field), boxHeight
+            this.board = new BoundingBox(180+29, 80+53, 372, 600-2*53);
         }
         else if(field ==2){
-            this.gate = new BoundingBox(180+800-30,80+190,0,410 - 190);
-            this.board = new BoundingBox(180+400, 80+53, 371, 600-105); //startingpoint of background + half the field
+            this.gate = new BoundingBox(180+800-30,80+190,0,405 - 190);
+            this.board = new BoundingBox(180+400, 80+53, 371, 600-2*53);
         }
     }
 

@@ -63,12 +63,13 @@ public class Puck {
         }
         //left
         if(this.posX<=this.board.getLeftX()){
+            //if puck is between goalLine topY and bottomY -> reset game
             if(this.posY>=Game.player1.gate.getTopY() && this.posY<=Game.player1.gate.getBottomY()){
                 Game.player2.score++;
                 System.out.println(Game.player2.score);
                 Game.resetPositions();
-                //game reset;
             }
+            //else -> bounce off
             else{
                 this.posX=this.board.getLeftX()+1;
                 if (velocityY>SPEED_LIMIT)
@@ -80,12 +81,14 @@ public class Puck {
         }
         //right
         if(this.posX+2*radius>this.board.getRightX()){
+            //if puck is between goalLine topY and bottomY -> reset game
             if(this.posY>=Game.player2.gate.getTopY() && this.posY<=Game.player2.gate.getBottomY()){
                 Game.player1.score++;
                 System.out.println(Game.player1.score);
                 Game.resetPositions();
                 //game reset;
             }
+            //else -> bounce off
             else {
                 this.posX=this.board.getRightX()-2*radius-1;
                 if (velocityY>SPEED_LIMIT)
@@ -102,9 +105,10 @@ public class Puck {
     }
 
     public void reset(){
+        //reset position
         this.posX = 550;
         this.posY = 350;
-
+        //reset velocity
         this.velocityX = 0;
         this.velocityY = 0;
 
