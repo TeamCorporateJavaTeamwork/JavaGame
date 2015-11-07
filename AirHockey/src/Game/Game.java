@@ -73,7 +73,7 @@ public class Game implements Runnable{
         g.clearRect(0, 0, this.display.WIDTH, this.display.HEIGHT);
 
         //Start Drawing
-
+        g.drawImage(Assets.blackBG, 0,0, 1200, 800, null);
         g.drawImage(Assets.background, 180, 80, 800, 600, null);
 
         player1.renderBlue(g);

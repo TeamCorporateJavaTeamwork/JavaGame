@@ -9,6 +9,7 @@ public class Assets {
     public static BufferedImage puck;
     public static BufferedImage puckAnim;
     public static BufferedImage numbers;
+    public static BufferedImage blackBG;
 
     public static void init() {
         background = ImageLoader.loadImage("/Textures/hockey field.png");
@@ -17,5 +18,6 @@ public class Assets {
         puck = ImageLoader.loadImage("/Textures/puck.png");
         puckAnim = ImageLoader.loadImage("/Textures/puckAnimation.png");
         numbers = ImageLoader.loadImage("/Textures/numbers.png");
+        blackBG = ImageLoader.loadImage("/Textures/background.jpg");
     }
 }
