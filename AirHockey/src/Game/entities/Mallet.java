@@ -2,6 +2,7 @@ package Game.entities;
 
 import Game.Game;
 import gfx.Assets;
+import org.omg.CORBA.PUBLIC_MEMBER;
 
 import java.awt.*;
 
@@ -16,7 +17,6 @@ public class Mallet{
     public float slideLevelX = 0.4f;
     public float slideLevelY = 0.4f;
     public float slideOpposition = -0.05f;
-    private final int SPEED_LIMIT = 6;
 
     public BoundingBox gate;
     private BoundingBox board;
@@ -34,7 +34,7 @@ public class Mallet{
         this.velocityY = 0;
 
         this.radius = 49;
-        this.weight = 5;
+        this.weight = 10;
 
         this.isMovingDown = false;
         this.isMovingLeft = false;
@@ -121,15 +121,8 @@ public class Mallet{
                 fx = dx/dist;
                 fy = dy/dist;
 
-                if (puckSpeedX > SPEED_LIMIT)
-                    puckSpeedX = SPEED_LIMIT;
-                if (puckSpeedY > SPEED_LIMIT)
-                    puckSpeedY = SPEED_LIMIT;
-
-                Game.puck.velocityX = (int)(puckSpeedX + ((1.05 * (radius + puckRadius) - dist)
-                        *fx));
-                Game.puck.velocityY = (int)(puckSpeedY + ((1.05 *(radius + puckRadius) - dist)
-                        *fy));
+                Game.puck.velocityX = (int)(puckSpeedX + ((radius + puckRadius) - dist) * fx);
+                Game.puck.velocityY = (int)(puckSpeedY + ((radius + puckRadius) - dist) * fy);
             }
         }
         //collision with board
@@ -184,15 +177,8 @@ public class Mallet{
                 fx = dx/dist;
                 fy = dy/dist;
 
-                if (puckSpeedX > SPEED_LIMIT)
-                    puckSpeedX = SPEED_LIMIT;
-                if (puckSpeedY > SPEED_LIMIT)
-                    puckSpeedY = SPEED_LIMIT;
-
-                Game.puck.velocityX = (int)(puckSpeedX + ((1.05 * (radius + puckRadius) - dist)
-                        *fx));
-                Game.puck.velocityY = (int)(puckSpeedY + ((1.05 *(radius + puckRadius) - dist)
-                        *fy));
+                Game.puck.velocityX = (int)(puckSpeedX + ((radius + puckRadius) - dist) * fx);
+                Game.puck.velocityY = (int)(puckSpeedY + ((radius + puckRadius) - dist) * fy);
             }
         }
     }
