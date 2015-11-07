@@ -62,19 +62,19 @@ public class Mallet{
         this.velocityY += this.velocityY * slideOpposition;
 
         if(Math.abs(this.velocityX) > 3f) {
-            slideLevelX = 0.5f;
-        } else if(Math.abs(this.velocityX) > 2f) {
             slideLevelX = 0.45f;
+        } else if(Math.abs(this.velocityX) > 2f) {
+            slideLevelX = 0.40f;
         } else {
-            slideLevelX = 0.4f;
+            slideLevelX = 0.35f;
         }
 
         if(Math.abs(this.velocityY) > 3f) {
-            slideLevelY = 0.5f;
-        } else if (Math.abs(this.velocityY) > 2f) {
             slideLevelY = 0.45f;
+        } else if (Math.abs(this.velocityY) > 2f) {
+            slideLevelY = 0.40f;
         } else {
-            slideLevelY = 0.4f;
+            slideLevelY = 0.35f;
         }
 
         if (isMovingUp) {
@@ -93,8 +93,8 @@ public class Mallet{
         int puckRadius = Game.puck.radius;
         int puckX = Game.puck.posX + puckRadius;
         int puckY = Game.puck.posY + puckRadius;
-        int puckSpeedX = Game.puck.velocityX;
-        int puckSpeedY = Game.puck.velocityY;
+        double puckSpeedX = Game.puck.velocityX;
+        double puckSpeedY = Game.puck.velocityY;
         float playerX = Game.player1.posX + radius;
         float playerY = Game.player1.posY + radius;
 
