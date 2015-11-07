@@ -81,8 +81,8 @@ public class Game implements Runnable{
         puck.render(g);
 
         //drawing score
-        g.drawImage(numbers.crop(player1.score, 0), 475, 10, null);
-        g.drawImage(numbers.crop(player2.score, 0), 625, 10, null);
+        g.drawImage(numbers.crop(player1.score, 0), 475, 23, null);
+        g.drawImage(numbers.crop(player2.score, 0), 625, 23, null);
 
         //Stop Drawing
 
