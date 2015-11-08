@@ -1,6 +1,6 @@
 package Game;
 
-import Game.entities.Mallet;
+import Game.entities.Player;
 import Game.entities.Puck;
 import display.Display;
 import Game.tasks.TaskManager;
@@ -28,8 +28,8 @@ public class Game implements Runnable{
 	private GameState game;
 
     public static Puck puck;
-    public static Mallet player1;
-    public static Mallet player2;
+    public static Player player1;
+    public static Player player2;
 	public static StateManager State;
 
 	public Game(String name) {
@@ -46,58 +46,53 @@ public class Game implements Runnable{
 	    this.State = new StateManager();
 	    this.mainMenu = new MenuState();
 	    this.game = new GameState();
-
-        this.player1 = new Mallet("Player 1", 250, 325,1);
-        this.player2 = new Mallet("Player 2", 800, 325,2);
-        this.puck = new Puck();
-
-        tasks = new TaskManager();
-
+        this.tasks = new TaskManager();
         this.numbers = new SpriteSheet(Assets.numbers, 60, 60);
 
+        this.player1 = new Player("Player 1", 250, 325, 1);
+        this.player2 = new Player("Player 2", 800, 325, 2);
+        this.puck = new Puck();
     }
 
     private void tick() {
 	    if(this.State.getState() == StateManager.STATES.GAME) {
-		    player1.tick();
-		    player2.tick();
+		    player1.getMallet().tick();
+		    player2.getMallet().tick();
 		    puck.tick();
 	    }
     }
     public static void resetPositions(){
-        player1.reset(1);
-        player2.reset(2);
+        player1.getMallet().reset(1);
+        player2.getMallet().reset(2);
         puck.reset();
     }
 
     private void render() {
-        this.bs = this.display.getCanvas().getBufferStrategy();
+	    this.bs = this.display.getCanvas().getBufferStrategy();
 
-        if(this.bs == null) {
-            this.display.getCanvas().createBufferStrategy(2);
-            return;
-        }
+	    if(this.bs == null) {
+		    this.display.getCanvas().createBufferStrategy(2);
+		    return;
+	    }
+	    this.g = this.bs.getDrawGraphics();
 
-        this.g = this.bs.getDrawGraphics();
-
-        g.clearRect(0, 0, this.display.WIDTH, this.display.HEIGHT);
+        this.g.clearRect(0, 0, this.display.WIDTH, this.display.HEIGHT);
 
         //Start Drawing
-        g.drawImage(Assets.blackBG, 0,0, 1200, 800, null);
+	    this.g.drawImage(Assets.blackBG, 0,0, 1200, 800, null);
 
 	    if(this.State.getState() == StateManager.STATES.GAME) {
-		    this.game.render(g, player1, player2, puck, numbers);
+		    this.game.render(this.g, this.player1, this.player2, this.puck, this.numbers);
 	    } else if(this.State.getState() == StateManager.STATES.MENU) {
-		    this.mainMenu.render(g);
+		    this.mainMenu.render(this.g);
 	    }
 
 	    //Stop Drawing
-
         this.g.dispose();
         this.bs.show();
     }
 
-    @Override
+	@Override
     public void run() {
         this.init();
 

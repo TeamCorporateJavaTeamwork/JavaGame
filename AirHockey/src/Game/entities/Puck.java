@@ -8,9 +8,6 @@ import gfx.SpriteSheet;
 import java.awt.*;
 import java.util.Random;
 
-//friction
-//random dir on spawn towards loser
-
 public class Puck {
     private static final int SPEED_LIMIT = 12;
     public  double velocityX;
@@ -28,20 +25,15 @@ public class Puck {
 
         this.posX = 550;
         this.posY = 350;
-
         this.velocityX = 0;
-
         this.velocityY = 0;
-
         this.redHasLost = true;
         this.roundStart = true;
-
         this.weight = 5;
         this.radius = 30;
 
         this.puckAnimation = new SpriteSheet(Assets.puckAnim, 100, 100);
-
-        this.board=new BoundingBox(180+29,80+52,800-52,600-105);
+        this.board = new BoundingBox(180+29,80+52,800-52,600-105);
     }
 
     //default is towards red
@@ -126,11 +118,10 @@ public class Puck {
         //left
         if(this.posX<=this.board.getLeftX()){
             //if puck is between goalLine topY and bottomY -> reset game
-            if(this.posY >= Game.player1.gate.getTopY() && this.posY <= Game.player1.gate.getBottomY()){
+            if(this.posY >= Game.player1.getGate().getBox().getTopY() && this.posY <= Game.player1.getGate().getBox().getBottomY()){
                 Game.player2.setScore(Game.player2.getScore() + 1);
                 this.redHasLost = false;
                 this.roundStart = true;
-                System.out.println(Game.player2.getScore());
                 Game.resetPositions();
             }
             //else -> bounce off
@@ -161,11 +152,10 @@ public class Puck {
         //right
         if(this.posX+2*radius>this.board.getRightX()){
             //if puck is between goalLine topY and bottomY -> reset game
-            if(this.posY>=Game.player2.gate.getTopY() && this.posY<=Game.player2.gate.getBottomY()){
+            if(this.posY >= Game.player2.getGate().getBox().getTopY() && this.posY <= Game.player2.getGate().getBox().getBottomY()){
                 Game.player1.setScore(Game.player1.getScore() + 1);
                 this.redHasLost = true;
                 this.roundStart = true;
-                System.out.println(Game.player1.getScore());
                 Game.resetPositions();
                 //game reset;
             }
@@ -209,7 +199,5 @@ public class Puck {
         g.drawImage(puckAnimation.crop(TaskManager.puckAnimation.position, 0), this.posX - 20, this.posY - 20, null);
         //command to stop animation: TaskManager.puckAnimationStop();
 
-        //normal puck
-        //g.drawImage(Assets.puck, this.posX, this.posY, null);
     }
 }

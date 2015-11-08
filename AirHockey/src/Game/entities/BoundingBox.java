@@ -7,7 +7,7 @@ public class BoundingBox {
     private Integer leftX;
     private Integer rightX;
 
-    public BoundingBox(Integer boxStartingPointX, Integer boxStartingPointY, Integer boxWidth, Integer boxHeight) {
+    public BoundingBox(int boxStartingPointX, int boxStartingPointY, int boxWidth, int boxHeight) {
         this.topY = boxStartingPointY;
         this.bottomY = boxStartingPointY+boxHeight;
         this.leftX = boxStartingPointX;

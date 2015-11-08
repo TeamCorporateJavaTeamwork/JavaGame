@@ -6,9 +6,6 @@ import gfx.Assets;
 import java.awt.*;
 
 public class Mallet{
-    private String name;
-	private int score;
-
     private float posX, posY;
     private int radius;
     private int weight;
@@ -17,14 +14,11 @@ public class Mallet{
     public float slideLevelY = 0.4f;
     public float slideOpposition = -0.05f;
 
-    public BoundingBox gate;
     private BoundingBox board;
 
     public boolean isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
 
-    public Mallet (String name, int posX, int posY,int field) {
-        this.name = name;
-        this.score = 0;
+    public Mallet (int posX, int posY,int field) {
 
         this.posX = posX;
         this.posY = posY;
@@ -35,20 +29,10 @@ public class Mallet{
         this.radius = 49;
         this.weight = 10;
 
-        this.isMovingDown = false;
-        this.isMovingLeft = false;
-        this.isMovingRight = false;
-        this.isMovingUp = false;
-
-        if(field ==1) {
-                                     //(starting point of bgX + left padding,start p of bgY + top padding(topY), width, height
-            this.gate = new BoundingBox(180+30,80+190,0,405-190);
-                                    //(starting point of bgX + left padding,start p of bgY + top padding(topY), width(to center of field), boxHeight
+        if(field == 1) {
             this.board = new BoundingBox(180+29, 80+53, 372, 600-2*53);
-        }
-        else if(field ==2){
-            this.gate = new BoundingBox(180+800-30,80+190,0,405 - 190);
-            this.board = new BoundingBox(180+400, 80+53, 371, 600-2*53);
+        } else if(field == 2) {
+            this.board = new BoundingBox(180+400, 80+53, 372, 600-2*53);
         }
     }
 
@@ -94,8 +78,8 @@ public class Mallet{
         int puckY = Game.puck.posY + puckRadius;
         double puckSpeedX = Game.puck.velocityX;
         double puckSpeedY = Game.puck.velocityY;
-        float playerX = Game.player1.posX + radius;
-        float playerY = Game.player1.posY + radius;
+        float playerX = Game.player1.getMallet().posX + radius;
+        float playerY = Game.player1.getMallet().posY + radius;
 
         if (playerX + radius + puckRadius > puckX &&
                 playerX < puckX + radius + puckRadius &&
@@ -150,8 +134,8 @@ public class Mallet{
 
         puckSpeedX = Game.puck.velocityX;
         puckSpeedY = Game.puck.velocityY;
-        playerX = Game.player2.posX + radius;
-        playerY = Game.player2.posY + radius;
+        playerX = Game.player2.getMallet().posX + radius;
+        playerY = Game.player2.getMallet().posY + radius;
 
         if (playerX + radius + puckRadius > puckX &&
                 playerX < puckX + radius + puckRadius &&
@@ -182,7 +166,7 @@ public class Mallet{
         }
     }
 
-    public void reset(Integer playerNum){
+    public void reset(int playerNum){
         if(playerNum == 1){
             this.posX=250;
         }
@@ -205,23 +189,5 @@ public class Mallet{
         g.drawImage(Assets.redPlayer, Math.round(this.posX), Math.round(this.posY), null);
     }
 
-    public String getName() {
 
-        return name;
-    }
-
-    public void setName(String name) {
-
-        this.name = name;
-    }
-
-	public int getScore() {
-
-		return score;
-	}
-
-	public void setScore(int score) {
-
-		this.score = score;
-	}
 }

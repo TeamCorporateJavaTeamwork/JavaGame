@@ -1,6 +1,6 @@
 package states;
 
-import Game.entities.Mallet;
+import Game.entities.Player;
 import Game.entities.Puck;
 import gfx.Assets;
 import gfx.SpriteSheet;
@@ -9,14 +9,15 @@ import java.awt.*;
 
 public class GameState {
 
-	public void render(Graphics g, Mallet player1, Mallet player2, Puck puck, SpriteSheet numbers) {
+	public void render(Graphics g, Player player1, Player player2, Puck puck, SpriteSheet numbers) {
 		//drawing game field
 		g.drawImage(Assets.background, 180, 80, 800, 600, null);
 
 		//drawing players and puck
-		player1.renderBlue(g);
-		player2.renderRed(g);
+		player1.getMallet().renderBlue(g);
+		player2.getMallet().renderRed(g);
 		puck.render(g);
+		g.setColor(Color.red);
 
 		Font players = new Font("arial", Font.BOLD, 30);
 		g.setFont(players);
