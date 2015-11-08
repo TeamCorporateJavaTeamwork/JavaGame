@@ -12,7 +12,6 @@ public class Display {
     private JFrame frame;
     private Canvas canvas;
 
-
     public Display(String name) {
         this.name = name;
         init();

@@ -1,16 +1,14 @@
 package Game.tasks;
 
-import Game.Game;
-
 public class TaskManager {
 
-    public static Task puckAnimation;
+	private Task puckAnimation;
 
     public TaskManager() {
-        this.puckAnimation = new Task(14);
+        puckAnimation = new Task(14);
     }
 
-    public static void tick(long timeDeduct) {
+    public void tick(long timeDeduct) {
         if(puckAnimation.isOn) {
             puckAnimation.delta += timeDeduct / puckAnimation.timePerTick;
             if(puckAnimation.delta >= 1) {
@@ -20,11 +18,16 @@ public class TaskManager {
         }
     }
 
-    private static void puckAnimationPos() {
+    private void puckAnimationPos() {
         puckAnimation.position++;
         if(puckAnimation.position > 9) {
             puckAnimation.position = 0;
         }
     }
+
+	public Task getPuckAnimation() {
+
+		return puckAnimation;
+	}
 
 }

@@ -1,7 +1,6 @@
 package Game.entities;
 
-import Game.Game;
-import Game.tasks.TaskManager;
+import Game.GameEngine;
 import gfx.Assets;
 import gfx.SpriteSheet;
 
@@ -9,16 +8,16 @@ import java.awt.*;
 import java.util.Random;
 
 public class Puck {
-    private static final int SPEED_LIMIT = 12;
-    public  double velocityX;
-    public  double velocityY;
-    public static int radius;
-    public static int posX, posY;
+    private final int SPEED_LIMIT = 12;
+	private double velocityX;
+	private double velocityY;
+	private int radius;
+    private int posX, posY;
     public BoundingBox board;
     private double wallFriction = 0.75D;
     private boolean redHasLost;
     private boolean roundStart;
-    public static boolean isInCorner, isInTopLeftCorner, isInBottomLeftCorner, isInTopRightCorner,
+    private boolean isInCorner, isInTopLeftCorner, isInBottomLeftCorner, isInTopRightCorner,
             isInBottomRightCorner;
 
     private SpriteSheet puckAnimation;
@@ -32,12 +31,6 @@ public class Puck {
         this.redHasLost = true;
         this.roundStart = true;
         this.radius = 30;
-
-        this.isInCorner = false;
-        this.isInTopLeftCorner = false;
-        this.isInBottomLeftCorner = false;
-        this.isInTopRightCorner = false;
-        this.isInBottomRightCorner = false;
 
         this.puckAnimation = new SpriteSheet(Assets.puckAnim, 100, 100);
         this.board = new BoundingBox(180+29,80+52,800-52,600-105);
@@ -102,11 +95,11 @@ public class Puck {
         //left
         if(this.posX<=this.board.getLeftX()){
             //if puck is between goalLine topY and bottomY -> reset game
-            if(this.posY >= Game.player1.getGate().getBox().getTopY() && this.posY <= Game.player1.getGate().getBox().getBottomY()){
-                Game.player2.setScore(Game.player2.getScore() + 1);
+            if(this.posY >= GameEngine.player1.getGate().getBox().getTopY() && this.posY <= GameEngine.player1.getGate().getBox().getBottomY()){
+	            GameEngine.player2.setScore(GameEngine.player2.getScore() + 1);
                 this.redHasLost = false;
                 this.roundStart = true;
-                Game.resetPositions();
+	            GameEngine.resetPositions();
             }
             //else -> bounce off
             else{
@@ -120,11 +113,11 @@ public class Puck {
         //right
         if(this.posX+2*radius>this.board.getRightX()){
             //if puck is between goalLine topY and bottomY -> reset game
-            if(this.posY >= Game.player2.getGate().getBox().getTopY() && this.posY <= Game.player2.getGate().getBox().getBottomY()){
-                Game.player1.setScore(Game.player1.getScore() + 1);
+            if(this.posY >= GameEngine.player2.getGate().getBox().getTopY() && this.posY <= GameEngine.player2.getGate().getBox().getBottomY()){
+	            GameEngine.player1.setScore(GameEngine.player1.getScore() + 1);
                 this.redHasLost = true;
                 this.roundStart = true;
-                Game.resetPositions();
+	            GameEngine.resetPositions();
                 //game reset;
             }
             //else -> bounce off
@@ -209,8 +202,68 @@ public class Puck {
 
     public void render(Graphics g) {
         //animated puck
-        g.drawImage(puckAnimation.crop(TaskManager.puckAnimation.position, 0), this.posX - 20, this.posY - 20, null);
+        g.drawImage(puckAnimation.crop(GameEngine.tasks.getPuckAnimation().position, 0), this.posX - 20, this.posY - 20, null);
         //command to stop animation: TaskManager.puckAnimationStop();
 
     }
+
+    public boolean isInCorner() {
+
+        return isInCorner;
+    }
+
+    public boolean isInTopLeftCorner() {
+
+        return isInTopLeftCorner;
+    }
+
+    public boolean isInBottomLeftCorner() {
+
+        return isInBottomLeftCorner;
+    }
+
+    public boolean isInBottomRightCorner() {
+
+        return isInBottomRightCorner;
+    }
+
+    public boolean isInTopRightCorner() {
+
+        return isInTopRightCorner;
+    }
+
+    public int getPosX() {
+
+        return posX;
+    }
+
+    public int getPosY() {
+
+        return posY;
+    }
+
+	public int getRadius() {
+
+		return radius;
+	}
+
+	public double getVelocityY() {
+
+		return velocityY;
+	}
+
+	public double getVelocityX() {
+
+		return velocityX;
+	}
+
+	public void setVelocityX(double velocityX) {
+
+		this.velocityX = velocityX;
+	}
+
+	public void setVelocityY(double velocityY) {
+
+		this.velocityY = velocityY;
+	}
 }

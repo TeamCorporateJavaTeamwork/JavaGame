@@ -1,6 +1,6 @@
 package Game.entities;
 
-import Game.Game;
+import Game.GameEngine;
 import gfx.Assets;
 import gfx.ImageColorizer;
 
@@ -9,10 +9,10 @@ import java.awt.*;
 public class Mallet{
     private float posX, posY;
     private int radius;
-    public float velocityX, velocityY;
-    public float slideLevelX = 0.4f;
-    public float slideLevelY = 0.4f;
-    public float slideOpposition = -0.05f;
+    private float velocityX, velocityY;
+    private float slideLevelX = 0.4f;
+    private float slideLevelY = 0.4f;
+    private float slideOpposition = -0.05f;
 
     private BoundingBox board;
 
@@ -46,22 +46,22 @@ public class Mallet{
 
 	private void collisionChecks() {
 
-		int puckRadius = Game.puck.radius;
-		int puckX = Game.puck.posX + puckRadius;
-		int puckY = Game.puck.posY + puckRadius;
-		double puckSpeedX = Game.puck.velocityX;
-		double puckSpeedY = Game.puck.velocityY;
-		float playerX = Game.player1.getMallet().posX + radius;
-		float playerY = Game.player1.getMallet().posY + radius;
+		int puckRadius = GameEngine.puck.getRadius();
+		int puckX = GameEngine.puck.getPosX() + puckRadius;
+		int puckY = GameEngine.puck.getPosY() + puckRadius;
+		double puckSpeedX = GameEngine.puck.getVelocityX();
+		double puckSpeedY = GameEngine.puck.getVelocityY();
+		float playerX = GameEngine.player1.getMallet().posX + radius;
+		float playerY = GameEngine.player1.getMallet().posY + radius;
 
 		checkCollision(playerX, playerY, puckX, puckY, puckRadius, puckSpeedX, puckSpeedY);
 
 		boardCollision();
 
-		puckSpeedX = Game.puck.velocityX;
-		puckSpeedY = Game.puck.velocityY;
-		playerX = Game.player2.getMallet().posX + radius;
-		playerY = Game.player2.getMallet().posY + radius;
+		puckSpeedX = GameEngine.puck.getVelocityX();
+		puckSpeedY = GameEngine.puck.getVelocityY();
+		playerX = GameEngine.player2.getMallet().posX + radius;
+		playerY = GameEngine.player2.getMallet().posY + radius;
 
 		checkCollision(playerX, playerY, puckX, puckY, puckRadius, puckSpeedX, puckSpeedY);
 
@@ -109,8 +109,8 @@ public class Mallet{
 				fx = dx/dist;
 				fy = dy/dist;
 
-				Game.puck.velocityX = (int)(puckSpeedX + ((radius + puckRadius) - dist) * fx);
-				Game.puck.velocityY = (int)(puckSpeedY + ((radius + puckRadius) - dist) * fy);
+				GameEngine.puck.setVelocityX((int)(puckSpeedX + ((radius + puckRadius) - dist) * fx));
+				GameEngine.puck.setVelocityY((int)(puckSpeedY + ((radius + puckRadius) - dist) * fy));
 			}
 		}
 
@@ -132,14 +132,12 @@ public class Mallet{
 	private void move() {
 		//New Moving Method -> Have Other Minor Bugs -> Code is unclean
 
-		if(Game.puck.isInCorner) {
-			if (Game.puck.isInTopLeftCorner) {
-				if (this.posY <= Game.puck.board.getTopY() + 2 * Game.puck
-						.radius &&
-						this.posX <= Game.puck.board.getLeftX() + 2 * Game.puck
-								.radius) {
-					Game.puck.velocityX = 1;
-					Game.puck.velocityY = 1;
+		if(GameEngine.puck.isInCorner()) {
+			if (GameEngine.puck.isInTopLeftCorner()) {
+				if (this.posY <= GameEngine.puck.board.getTopY() + 2 * GameEngine.puck.getRadius() &&
+						this.posX <= GameEngine.puck.board.getLeftX() + 2 * GameEngine.puck.getRadius()) {
+					GameEngine.puck.setVelocityX(1);
+					GameEngine.puck.setVelocityY(1);
 					this.isMovingUp = false;
 					this.isMovingLeft = false;
 					this.posX += 0.5f;
@@ -148,16 +146,11 @@ public class Mallet{
 					this.posX += this.velocityX;
 					this.posY += this.velocityY;
 				}
-			} else if (Game.puck.isInBottomLeftCorner) {
-				if (this.posY + 2*this.radius >= Game.puck.board.getBottomY() -
-						2*Game.puck.radius &&
-						this
-								.posX <=
-								Game.puck.board
-										.getLeftX()
-										+ 2*Game.puck.radius) {
-					Game.puck.velocityX = 1;
-					Game.puck.velocityY = -1;
+			} else if (GameEngine.puck.isInBottomLeftCorner()) {
+				if (this.posY + 2 * this.radius >= GameEngine.puck.board.getBottomY() - 2 * GameEngine.puck.getRadius() &&
+						this.posX <= GameEngine.puck.board.getLeftX()	+ 2 * GameEngine.puck.getRadius()) {
+					GameEngine.puck.setVelocityX(1);
+					GameEngine.puck.setVelocityY(-1);
 					this.isMovingDown = false;
 					this.isMovingLeft = false;
 					this.posX += 0.5f;
@@ -166,12 +159,11 @@ public class Mallet{
 					this.posX += this.velocityX;
 					this.posY += this.velocityY;
 				}
-			} else if (Game.puck.isInTopRightCorner) {
-				if (this.posY  <= Game.puck.board.getTopY() +
-						2*Game.puck.radius &&
-						this.posX + 2*this.radius >= Game.puck.board.getRightX() - 2*Game.puck.radius) {
-					Game.puck.velocityX = -1;
-					Game.puck.velocityY = 1;
+			} else if (GameEngine.puck.isInTopRightCorner()) {
+				if (this.posY  <= GameEngine.puck.board.getTopY() + 2 * GameEngine.puck.getRadius() &&
+						this.posX + 2 * this.radius >= GameEngine.puck.board.getRightX() - 2 * GameEngine.puck.getRadius()) {
+					GameEngine.puck.setVelocityX(-1);
+					GameEngine.puck.setVelocityY(1);
 					this.isMovingUp = false;
 					this.isMovingRight = false;
 					this.posX -= 0.5f;
@@ -180,12 +172,11 @@ public class Mallet{
 					this.posX += this.velocityX;
 					this.posY += this.velocityY;
 				}
-			} else if (Game.puck.isInBottomRightCorner) {
-				if (this.posY + 2*this.radius >= Game.puck.board.getBottomY() -
-						2*Game.puck.radius &&
-						this.posX + 2*this.radius >= Game.puck.board.getRightX() - 2*Game.puck.radius) {
-					Game.puck.velocityX = -1;
-					Game.puck.velocityY = -1;
+			} else if (GameEngine.puck.isInBottomRightCorner()) {
+				if (this.posY + 2*this.radius >= GameEngine.puck.board.getBottomY() - 2 * GameEngine.puck.getRadius() &&
+						this.posX + 2 * this.radius >= GameEngine.puck.board.getRightX() - 2 * GameEngine.puck.getRadius()) {
+					GameEngine.puck.setVelocityX(-1);
+					GameEngine.puck.setVelocityY(-1);
 					this.isMovingDown = false;
 					this.isMovingRight = false;
 					this.posX -= 0.5f;

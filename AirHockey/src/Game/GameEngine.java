@@ -14,7 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-public class Game implements Runnable{
+public class GameEngine implements Runnable{
     private String title;
     private Display display;
     private BufferStrategy bs;
@@ -22,7 +22,7 @@ public class Game implements Runnable{
     private Thread thread;
     private boolean isRunning;
 	private SpriteSheet numbers;
-	private TaskManager tasks;
+	public static TaskManager tasks;
 
 	private MenuState mainMenu;
 	private GameState game;
@@ -32,7 +32,7 @@ public class Game implements Runnable{
     public static Player player2;
 	public static StateManager State;
 
-	public Game(String name) {
+	public GameEngine(String name) {
         this.title = name;
     }
 
@@ -43,19 +43,20 @@ public class Game implements Runnable{
 	    this.display.getCanvas().addKeyListener(new InputHandler());
 	    this.display.getCanvas().addMouseListener(new MouseInputHandler());
 
-	    this.State = new StateManager();
+	    State = new StateManager();
 	    this.mainMenu = new MenuState();
 	    this.game = new GameState();
-        this.tasks = new TaskManager();
+        tasks = new TaskManager();
+
         this.numbers = new SpriteSheet(Assets.numbers, 60, 60);
 
-        this.player1 = new Player("Player 1", 250, 325, 1);
-        this.player2 = new Player("Player 2", 800, 325, 2);
-        this.puck = new Puck();
+        player1 = new Player("Player 1", 250, 325, 1);
+        player2 = new Player("Player 2", 800, 325, 2);
+        puck = new Puck();
     }
 
     private void tick() {
-	    if(this.State.getState() == StateManager.STATES.GAME) {
+	    if(State.getState() == StateManager.STATES.GAME) {
 		    player1.getMallet().tick();
 		    player2.getMallet().tick();
 		    puck.tick();
@@ -76,14 +77,14 @@ public class Game implements Runnable{
 	    }
 	    this.g = this.bs.getDrawGraphics();
 
-        this.g.clearRect(0, 0, this.display.WIDTH, this.display.HEIGHT);
+        this.g.clearRect(0, 0, Display.WIDTH, Display.HEIGHT);
 
         //Start Drawing
 	    this.g.drawImage(Assets.blackBG, 0,0, 1200, 800, null);
 
-	    if(this.State.getState() == StateManager.STATES.GAME) {
-		    this.game.render(this.g, this.player1, this.player2, this.puck, this.numbers);
-	    } else if(this.State.getState() == StateManager.STATES.MENU) {
+	    if(State.getState() == StateManager.STATES.GAME) {
+		    this.game.render(this.g, player1, player2, puck, this.numbers);
+	    } else if(State.getState() == StateManager.STATES.MENU) {
 		    this.mainMenu.render(this.g);
 	    }
 

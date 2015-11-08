@@ -1,8 +1,5 @@
 package Game.tasks;
 
-/**
- * Created by Bobekas on 7/11/2015 г..
- */
 public class Task {
     public int fps;
     public double delta = 0;
