@@ -13,11 +13,13 @@ public class Puck {
     public  double velocityX;
     public  double velocityY;
     public static int radius;
-    public static int posX, posY, weight;
-    private BoundingBox board;
+    public static int posX, posY;
+    public BoundingBox board;
     private double wallFriction = 0.75D;
     private boolean redHasLost;
     private boolean roundStart;
+    public static boolean isInCorner, isInTopLeftCorner, isInBottomLeftCorner, isInTopRightCorner,
+            isInBottomRightCorner;
 
     private SpriteSheet puckAnimation;
 
@@ -29,8 +31,13 @@ public class Puck {
         this.velocityY = 0;
         this.redHasLost = true;
         this.roundStart = true;
-        this.weight = 5;
         this.radius = 30;
+
+        this.isInCorner = false;
+        this.isInTopLeftCorner = false;
+        this.isInBottomLeftCorner = false;
+        this.isInTopRightCorner = false;
+        this.isInBottomRightCorner = false;
 
         this.puckAnimation = new SpriteSheet(Assets.puckAnim, 100, 100);
         this.board = new BoundingBox(180+29,80+52,800-52,600-105);
@@ -65,54 +72,31 @@ public class Puck {
             roundStart = false;
         }
 
+        calcBoardCollisionsAndAngles();
+
+        this.posX += velocityX;
+        this.posY += velocityY;
+
+        cornerCheck();
+    }
+
+    private void calcBoardCollisionsAndAngles() {
         //collision with board
         //we define a circle by the most top left point of the smallest rectangle that can engulf the circle
         //top
         if(this.posY<this.board.getTopY()){
             this.posY=this.board.getTopY()+1;
-            if (velocityY < 0) {
-                velocityY += wallFriction;
-            } else {
-                velocityY -= wallFriction;
-            }
-            if (Math.abs(velocityY)>SPEED_LIMIT) {
-                if (velocityY < 0) {
-                    velocityY = -SPEED_LIMIT;
-                } else {
-                    velocityY = SPEED_LIMIT;
-                }
-            }
-            if (Math.abs(velocityX)>SPEED_LIMIT) {
-                if (velocityX < 0) {
-                    velocityX = -SPEED_LIMIT;
-                } else {
-                    velocityX = SPEED_LIMIT;
-                }
-            }
+            adjustFrictionY();
+            controlSpeedY();
+            controlSpeedX();
             velocityY = -velocityY;
         }
         //bottom
         if(this.posY+2*radius>this.board.getBottomY()){
             this.posY=this.board.getBottomY()-2*radius -1;
-            if (velocityY < 0) {
-                velocityY += wallFriction;
-            } else {
-                velocityY -= wallFriction;
-            }
-            if (Math.abs(velocityY)>SPEED_LIMIT) {
-                if (velocityY < 0) {
-                    velocityY = -SPEED_LIMIT;
-                } else {
-                    velocityY = SPEED_LIMIT;
-                }
-            }
-            if (Math.abs(velocityX)>SPEED_LIMIT) {
-                if (velocityX < 0) {
-                    velocityX = -SPEED_LIMIT;
-                } else {
-                    velocityX = SPEED_LIMIT;
-                }
-            }
+            adjustFrictionY();
+            controlSpeedY();
+            controlSpeedX();
             velocityY = -velocityY;
         }
         //left
@@ -127,25 +111,9 @@ public class Puck {
             //else -> bounce off
             else{
                 this.posX=this.board.getLeftX()+1;
-                if (Math.abs(velocityY)>SPEED_LIMIT) {
-                    if (velocityY < 0) {
-                        velocityY = -SPEED_LIMIT;
-                    } else {
-                        velocityY = SPEED_LIMIT;
-                    }
-                }
-                if (velocityX < 0) {
-                    velocityX += wallFriction;
-                } else {
-                    velocityX -= wallFriction;
-                }
-                if (Math.abs(velocityX)>SPEED_LIMIT) {
-                    if (velocityX < 0) {
-                        velocityX = -SPEED_LIMIT;
-                    } else {
-                        velocityX = SPEED_LIMIT;
-                    }
-                }
+                adjustFrictionX();
+                controlSpeedY();
+                controlSpeedX();
                 velocityX = -velocityX;
             }
         }
@@ -162,30 +130,75 @@ public class Puck {
             //else -> bounce off
             else {
                 this.posX=this.board.getRightX()-2*radius-1;
-                if (Math.abs(velocityY)>SPEED_LIMIT)
-                    if (velocityY < 0) {
-                        velocityY = -SPEED_LIMIT;
-                    } else {
-                        velocityY = SPEED_LIMIT;
-                    }
-                if (velocityX < 0) {
-                    velocityX += wallFriction;
-                } else {
-                    velocityX -= wallFriction;
-                }
-                if (Math.abs(velocityX)>SPEED_LIMIT)
-                    if (velocityX < 0) {
-                        velocityX = -SPEED_LIMIT;
-                    } else {
-                        velocityX = SPEED_LIMIT;
-                    }
+                adjustFrictionX();
+                controlSpeedY();
+                controlSpeedX();
                 velocityX = -velocityX;
             }
         }
+    }
 
-        this.posX += velocityX;
-        this.posY += velocityY;
+    private void adjustFrictionY() {
+        if (velocityY < 0) {
+            velocityY += wallFriction;
+        } else {
+            velocityY -= wallFriction;
+        }
+    }
 
+    private void adjustFrictionX() {
+        if (velocityX < 0) {
+            velocityX += wallFriction;
+        } else {
+            velocityX -= wallFriction;
+        }
+    }
+
+    private void controlSpeedX() {
+        if (Math.abs(velocityX)>SPEED_LIMIT)
+            if (velocityX < 0) {
+                velocityX = -SPEED_LIMIT;
+            } else {
+                velocityX = SPEED_LIMIT;
+            }
+    }
+
+    private void controlSpeedY() {
+        if (Math.abs(velocityY)>SPEED_LIMIT) {
+            if (velocityY < 0) {
+                velocityY = -SPEED_LIMIT;
+            } else {
+                velocityY = SPEED_LIMIT;
+            }
+        }
+    }
+
+    private void cornerCheck() {
+        if (this.posY <= board.getTopY() + 2*this.radius && this.posX <= board.getLeftX() + 2*this.radius) {
+            this.isInTopLeftCorner = true;
+            this.isInCorner = true;
+        } else if(this.posY + 2*this.radius >= board.getBottomY() - 2*this.radius && this.posX <=
+                board
+                        .getLeftX()
+                        + 2*this.radius){
+            this.isInBottomLeftCorner = true;
+            this.isInCorner = true;
+        } else if(this.posY <= board.getTopY() + 2*this.radius && this.posX +
+                2*this.radius >= board.getRightX() - 2*this.radius) {
+            this.isInTopRightCorner = true;
+            this.isInCorner = true;
+        } else if(this.posY + 2*this.radius >= board.getBottomY() - 2*this.radius && this.posX +
+                2*this.radius >=
+                board.getRightX() - 2*this.radius) {
+            this.isInBottomRightCorner = true;
+            this.isInCorner = true;
+        } else {
+            this.isInTopLeftCorner = false;
+            this.isInTopRightCorner = false;
+            this.isInBottomRightCorner = false;
+            this.isInBottomLeftCorner = false;
+            this.isInCorner = false;
+        }
     }
 
     public void reset(){

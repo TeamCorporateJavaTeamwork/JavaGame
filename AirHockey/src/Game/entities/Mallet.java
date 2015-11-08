@@ -9,7 +9,6 @@ import java.awt.*;
 public class Mallet{
     private float posX, posY;
     private int radius;
-    private int weight;
     public float velocityX, velocityY;
     public float slideLevelX = 0.4f;
     public float slideLevelY = 0.4f;
@@ -28,7 +27,6 @@ public class Mallet{
         this.velocityY = 0;
 
         this.radius = 49;
-        this.weight = 10;
 
         if(field == 1) {
             this.board = new BoundingBox(180+29, 80+53, 372, 600-2*53);
@@ -39,7 +37,7 @@ public class Mallet{
 
     public void tick() {
         move();
-	    addOpposistion();
+	    addOpposition();
         calculateSlideLevels();
 	    calculateVelocity();
 	    collisionChecks();
@@ -95,9 +93,10 @@ public class Mallet{
 	}
 
 	private void checkCollision(float playerX, float playerY, int puckX, int puckY, int puckRadius, double puckSpeedX, double puckSpeedY) {
-		if (isColliding(playerX, playerY, puckX, puckY, puckRadius)) {
+		if (hasPotentialOfColliding(playerX, playerY, puckX, puckY, puckRadius)) {
 			double distance = calculateDistance(playerX, playerY, puckX, puckY);
 
+			//Check if actual collision occurred
 			if (distance < radius + puckRadius) {
 
 				double dx, dy, fx, fy;
@@ -122,19 +121,92 @@ public class Mallet{
 				(playerY - puckY) * (playerY - puckY)));
 	}
 
-	private boolean isColliding(float playerX, float playerY, int puckX, int puckY, int puckRadius) {
+	private boolean hasPotentialOfColliding(float playerX, float playerY, int puckX, int puckY, int
+			puckRadius) {
+		//Axis-Aligned BoundingBoxCheck
 		return playerX + this.radius + puckRadius > puckX &&
 				playerX < puckX + this.radius + puckRadius &&
 				playerY + radius + puckRadius > puckY
 				&& playerY < puckY + radius + puckRadius;
 	}
 	private void move() {
-        //Moving X and Y with the velocity
-		this.posY += this.velocityY;
-		this.posX += this.velocityX;
+		//New Moving Method -> Have Other Minor Bugs -> Code is unclean
+
+		if(Game.puck.isInCorner) {
+			if (Game.puck.isInTopLeftCorner) {
+				if (this.posY <= Game.puck.board.getTopY() + 2 * Game.puck
+						.radius &&
+						this.posX <= Game.puck.board.getLeftX() + 2 * Game.puck
+								.radius) {
+					Game.puck.velocityX = 1;
+					Game.puck.velocityY = 1;
+					this.isMovingUp = false;
+					this.isMovingLeft = false;
+					this.posX += 0.5f;
+					this.posY += 0.5f;
+				} else {
+					this.posX += this.velocityX;
+					this.posY += this.velocityY;
+				}
+			} else if (Game.puck.isInBottomLeftCorner) {
+				if (this.posY + 2*this.radius >= Game.puck.board.getBottomY() -
+						2*Game.puck.radius &&
+						this
+								.posX <=
+								Game.puck.board
+										.getLeftX()
+										+ 2*Game.puck.radius) {
+					Game.puck.velocityX = 1;
+					Game.puck.velocityY = -1;
+					this.isMovingDown = false;
+					this.isMovingLeft = false;
+					this.posX += 0.5f;
+					this.posY -= 0.5f;
+				} else {
+					this.posX += this.velocityX;
+					this.posY += this.velocityY;
+				}
+			} else if (Game.puck.isInTopRightCorner) {
+				if (this.posY  <= Game.puck.board.getTopY() +
+						2*Game.puck.radius &&
+						this.posX + 2*this.radius >= Game.puck.board.getRightX() - 2*Game.puck.radius) {
+					Game.puck.velocityX = -1;
+					Game.puck.velocityY = 1;
+					this.isMovingUp = false;
+					this.isMovingRight = false;
+					this.posX -= 0.5f;
+					this.posY += 0.5f;
+				} else {
+					this.posX += this.velocityX;
+					this.posY += this.velocityY;
+				}
+			} else if (Game.puck.isInBottomRightCorner) {
+				if (this.posY + 2*this.radius >= Game.puck.board.getBottomY() -
+						2*Game.puck.radius &&
+						this.posX + 2*this.radius >= Game.puck.board.getRightX() - 2*Game.puck.radius) {
+					Game.puck.velocityX = -1;
+					Game.puck.velocityY = -1;
+					this.isMovingDown = false;
+					this.isMovingRight = false;
+					this.posX -= 0.5f;
+					this.posY -= 0.5f;
+				} else {
+					this.posX += this.velocityX;
+					this.posY += this.velocityY;
+				}
+			}
+		} else {
+			this.posY += this.velocityY;
+			this.posX += this.velocityX;
+		}
+
+		//->> THIS IS OUR OLD MOVE METHOD ->> HAD BUG IN CORNERS OVERLAPPING PUCK
+        //Moving X and Y with the velocity without any checks
+		//this.posY += this.velocityY;
+		//this.posX += this.velocityX;
 	}
 
-	private void addOpposistion() {
+	private void addOpposition() {
         //add opposition
 		this.velocityX += this.velocityX * slideOpposition;
 		this.velocityY += this.velocityY * slideOpposition;
