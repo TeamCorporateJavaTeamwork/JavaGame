@@ -1,8 +1,9 @@
-package States;
+package states;
 
 public class StateManager {
 	public enum STATES {
 		GAME,
+		SETTINGS,
 		MENU
 	}
 

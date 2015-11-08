@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AirHockey:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AirHockey_jar</output-path>
+    <root id="archive" name="AirHockey.jar">
+      <element id="module-output" name="AirHockey" />
+      <element id="library" level="project" name="Resources" />
+    </root>
+  </artifact>
+</component>
