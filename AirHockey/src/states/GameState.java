@@ -14,8 +14,8 @@ public class GameState {
 		g.drawImage(Assets.background, 180, 80, 800, 600, null);
 
 		//drawing players and puck
-		player1.getMallet().renderBlue(g);
-		player2.getMallet().renderRed(g);
+		player1.getMallet().renderLeft(g);
+		player2.getMallet().renderRight(g);
 		puck.render(g);
 		g.setColor(Color.red);
 
