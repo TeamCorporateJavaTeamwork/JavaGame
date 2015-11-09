@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.Random;
 
 public class Puck {
-    private final int SPEED_LIMIT = 9;
+    private final int SPEED_LIMIT = 10;
 	private double velocityX;
 	private double velocityY;
 	private int radius;
@@ -17,10 +17,9 @@ public class Puck {
     private double wallFriction = 0.5D;
     private boolean redHasLost;
     private boolean roundStart;
-    private boolean isInCorner, isInTopLeftCorner, isInBottomLeftCorner, isInTopRightCorner,
-            isInBottomRightCorner;
-
-    private SpriteSheet puckAnimation;
+    private boolean isInCorner, isInTopLeftCorner,
+                        isInBottomLeftCorner, isInTopRightCorner,
+                            isInBottomRightCorner;
 
     public Puck() {
 
@@ -32,7 +31,6 @@ public class Puck {
         this.roundStart = true;
         this.radius = 30;
 
-        this.puckAnimation = new SpriteSheet(Assets.puckAnim, 100, 100);
         this.board = new BoundingBox(180+29,80+52,800-52,600-105);
     }
 
@@ -95,14 +93,14 @@ public class Puck {
         //left
         if(this.posX<=this.board.getLeftX()){
             //if puck is between goalLine topY and bottomY -> reset game
-            if(this.posY >= GameEngine.player1.getGate().getBox().getTopY() && this.posY <= GameEngine.player1.getGate().getBox().getBottomY()){
+            if(this.posY >= GameEngine.player1.getGate().getBox().getTopY()
+                    && this.posY <= GameEngine.player1.getGate().getBox().getBottomY()){
 	            GameEngine.player2.setScore(GameEngine.player2.getScore() + 1);
                 this.redHasLost = false;
                 this.roundStart = true;
 	            GameEngine.resetPositions();
-            }
-            //else -> bounce off
-            else{
+            } else {
+                //bounce off
                 this.posX=this.board.getLeftX()+1;
                 adjustFrictionX();
                 controlSpeedY();
@@ -113,15 +111,15 @@ public class Puck {
         //right
         if(this.posX+2*radius>this.board.getRightX()){
             //if puck is between goalLine topY and bottomY -> reset game
-            if(this.posY >= GameEngine.player2.getGate().getBox().getTopY() && this.posY <= GameEngine.player2.getGate().getBox().getBottomY()){
+            if(this.posY >= GameEngine.player2.getGate().getBox().getTopY()
+                    && this.posY <= GameEngine.player2.getGate().getBox().getBottomY()){
 	            GameEngine.player1.setScore(GameEngine.player1.getScore() + 1);
                 this.redHasLost = true;
                 this.roundStart = true;
 	            GameEngine.resetPositions();
                 //game reset;
-            }
-            //else -> bounce off
-            else {
+            } else {
+                //bounce off
                 this.posX=this.board.getRightX()-2*radius-1;
                 adjustFrictionX();
                 controlSpeedY();
@@ -167,25 +165,20 @@ public class Puck {
     }
 
     private void cornerCheck() {
-        if (this.posY <= board.getTopY() + 2*this.radius - 4 && this.posX <= board.getLeftX() +
-                2*this.radius - 4) {
+        if (this.posY <= board.getTopY() + 2*this.radius - 4
+                && this.posX <= board.getLeftX() + 2*this.radius - 4) {
             this.isInTopLeftCorner = true;
             this.isInCorner = true;
-        } else if(this.posY + 2*this.radius - 4 >= board.getBottomY() - 2*this.radius + 4&& this
-                .posX <=
-                board
-                        .getLeftX()
-                        + 2*this.radius){
+        } else if(this.posY + 2*this.radius - 4 >= board.getBottomY() - 2*this.radius + 4
+                    && this.posX <= board.getLeftX() + 2*this.radius){
             this.isInBottomLeftCorner = true;
             this.isInCorner = true;
-        } else if(this.posY <= board.getTopY() + 2*this.radius - 4 && this.posX +
-                2*this.radius >= board.getRightX() - 2*this.radius) {
+        } else if(this.posY <= board.getTopY() + 2*this.radius - 4
+                    && this.posX + 2*this.radius >= board.getRightX() - 2*this.radius) {
             this.isInTopRightCorner = true;
             this.isInCorner = true;
-        } else if(this.posY + 2*this.radius>= board.getBottomY() - 2*this.radius && this
-                .posX +
-                2*this.radius >=
-                board.getRightX() - 2*this.radius) {
+        } else if(this.posY + 2*this.radius>= board.getBottomY() - 2*this.radius
+                    && this.posX + 2*this.radius >= board.getRightX() - 2*this.radius) {
             this.isInBottomRightCorner = true;
             this.isInCorner = true;
         } else {
@@ -204,10 +197,9 @@ public class Puck {
     }
 
     public void render(Graphics g) {
-        //animated puck
+        //normal puck
         g.drawImage(Assets.puck, this.posX, this.posY, null);
-        //command to stop animation: TaskManager.puckAnimationStop();
-
+        //animated puck had incorrect image dimensions
     }
 
     public boolean isInCorner() {
@@ -243,14 +235,6 @@ public class Puck {
     public int getPosY() {
 
         return posY;
-    }
-
-    public void setPosX(int posiX) {
-        this.posX = posiX;
-    }
-
-    public void setPosY(int posiY) {
-        this.posY = posiY;
     }
 
 	public int getRadius() {

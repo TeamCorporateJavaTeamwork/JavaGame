@@ -132,10 +132,8 @@ public class Mallet{
 
 		if(GameEngine.puck.isInCorner()) {
 			if (GameEngine.puck.isInTopLeftCorner()) {
-				if (this.posY <= GameEngine.puck.board.getTopY() + 2 * GameEngine.puck.getRadius
-						() &&
-						this.posX <= GameEngine.puck.board.getLeftX() + 2 * GameEngine.puck
-								.getRadius()) {
+				if (this.posY <= GameEngine.puck.board.getTopY() + 2 * GameEngine.puck.getRadius()
+						&& this.posX <= GameEngine.puck.board.getLeftX() + 2 * GameEngine.puck.getRadius()) {
 					GameEngine.puck.setVelocityX(1);
 					GameEngine.puck.setVelocityY(1);
 					this.posX += 0.5f;
@@ -145,10 +143,8 @@ public class Mallet{
 					this.posY += this.velocityY;
 				}
 			} else if (GameEngine.puck.isInBottomLeftCorner()) {
-				if (this.posY + 2 * this.radius >= GameEngine.puck.board.getBottomY() - 2 *
-						GameEngine.puck.getRadius() &&
-						this.posX <= GameEngine.puck.board.getLeftX() + 2 * GameEngine.puck
-								.getRadius()) {
+				if (this.posY + 2 * this.radius >= GameEngine.puck.board.getBottomY() - 2 * GameEngine.puck.getRadius()
+						&& this.posX <= GameEngine.puck.board.getLeftX() + 2 * GameEngine.puck.getRadius()) {
 					GameEngine.puck.setVelocityX(1);
 					GameEngine.puck.setVelocityY(-1);
 					this.posX += 0.5f;
@@ -158,11 +154,8 @@ public class Mallet{
 					this.posY += this.velocityY;
 				}
 			} else if (GameEngine.puck.isInTopRightCorner()) {
-				if (this.posY <= GameEngine.puck.board.getTopY() + 2 * GameEngine.puck
-						.getRadius
-						() - 4 &&
-						this.posX + 2 * this.radius >= GameEngine.puck.board.getRightX() - 2 *
-								GameEngine.puck.getRadius() + 4) {
+				if (this.posY <= GameEngine.puck.board.getTopY() + 2 * GameEngine.puck.getRadius() - 4
+						&& this.posX + 2 * this.radius >= GameEngine.puck.board.getRightX() - 2 * GameEngine.puck.getRadius() + 4) {
 					GameEngine.puck.setVelocityX(-1);
 					GameEngine.puck.setVelocityY(1);
 					this.posX -= 0.5f;
@@ -172,10 +165,8 @@ public class Mallet{
 					this.posY += this.velocityY;
 				}
 			} else if (GameEngine.puck.isInBottomRightCorner()) {
-				if (this.posY + 2*this.radius >= GameEngine.puck.board.getBottomY() - 2 *
-						GameEngine.puck.getRadius() + 4 &&
-						this.posX + 2 * this.radius >= GameEngine.puck.board.getRightX() - 2 *
-								GameEngine.puck.getRadius() + 4) {
+				if (this.posY + 2*this.radius >= GameEngine.puck.board.getBottomY() - 2 * GameEngine.puck.getRadius() + 4
+						&& this.posX + 2 * this.radius >= GameEngine.puck.board.getRightX() - 2 * GameEngine.puck.getRadius() + 4) {
 					GameEngine.puck.setVelocityX(-1);
 					GameEngine.puck.setVelocityY(-1);
 					this.posX -= 0.5f;
