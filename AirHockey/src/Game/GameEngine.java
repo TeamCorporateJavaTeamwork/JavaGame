@@ -59,15 +59,15 @@ public class GameEngine implements Runnable{
 
     private void tick() {
 	    if(State.getState() == StateManager.STATES.GAME) {
-		    player1.getMallet().tick();
+            player1.getMallet().tick();
 		    player2.getMallet().tick();
-		    puck.tick();
-	    }
+            puck.tick();
+        }
     }
     public static void resetPositions(){
+        puck.reset();
         player1.getMallet().reset(1);
         player2.getMallet().reset(2);
-        puck.reset();
     }
 
     private void render() {

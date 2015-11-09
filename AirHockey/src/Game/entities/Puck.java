@@ -8,13 +8,13 @@ import java.awt.*;
 import java.util.Random;
 
 public class Puck {
-    private final int SPEED_LIMIT = 12;
+    private final int SPEED_LIMIT = 9;
 	private double velocityX;
 	private double velocityY;
 	private int radius;
     private int posX, posY;
     public BoundingBox board;
-    private double wallFriction = 0.75D;
+    private double wallFriction = 0.5D;
     private boolean redHasLost;
     private boolean roundStart;
     private boolean isInCorner, isInTopLeftCorner, isInBottomLeftCorner, isInTopRightCorner,
@@ -167,20 +167,23 @@ public class Puck {
     }
 
     private void cornerCheck() {
-        if (this.posY <= board.getTopY() + 2*this.radius && this.posX <= board.getLeftX() + 2*this.radius) {
+        if (this.posY <= board.getTopY() + 2*this.radius - 4 && this.posX <= board.getLeftX() +
+                2*this.radius - 4) {
             this.isInTopLeftCorner = true;
             this.isInCorner = true;
-        } else if(this.posY + 2*this.radius >= board.getBottomY() - 2*this.radius && this.posX <=
+        } else if(this.posY + 2*this.radius - 4 >= board.getBottomY() - 2*this.radius + 4&& this
+                .posX <=
                 board
                         .getLeftX()
                         + 2*this.radius){
             this.isInBottomLeftCorner = true;
             this.isInCorner = true;
-        } else if(this.posY <= board.getTopY() + 2*this.radius && this.posX +
+        } else if(this.posY <= board.getTopY() + 2*this.radius - 4 && this.posX +
                 2*this.radius >= board.getRightX() - 2*this.radius) {
             this.isInTopRightCorner = true;
             this.isInCorner = true;
-        } else if(this.posY + 2*this.radius >= board.getBottomY() - 2*this.radius && this.posX +
+        } else if(this.posY + 2*this.radius>= board.getBottomY() - 2*this.radius && this
+                .posX +
                 2*this.radius >=
                 board.getRightX() - 2*this.radius) {
             this.isInBottomRightCorner = true;
@@ -202,7 +205,7 @@ public class Puck {
 
     public void render(Graphics g) {
         //animated puck
-        g.drawImage(puckAnimation.crop(GameEngine.tasks.getPuckAnimation().position, 0), this.posX - 20, this.posY - 20, null);
+        g.drawImage(Assets.puck, this.posX, this.posY, null);
         //command to stop animation: TaskManager.puckAnimationStop();
 
     }
@@ -240,6 +243,14 @@ public class Puck {
     public int getPosY() {
 
         return posY;
+    }
+
+    public void setPosX(int posiX) {
+        this.posX = posiX;
+    }
+
+    public void setPosY(int posiY) {
+        this.posY = posiY;
     }
 
 	public int getRadius() {

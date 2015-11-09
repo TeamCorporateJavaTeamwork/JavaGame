@@ -36,12 +36,11 @@ public class Mallet{
     }
 
     public void tick() {
-        move();
 	    addOpposition();
         calculateSlideLevels();
 	    calculateVelocity();
 	    collisionChecks();
-
+		move();
     }
 
 	private void collisionChecks() {
@@ -105,15 +104,14 @@ public class Mallet{
 				dy = puckY - playerY; // distance between centers in y
 
 				// define unit-length vector (fx, fy) in direction of the force
-				double dist = Math.sqrt(dx*dx + dy*dy); // norm of (dx, dy)
-				fx = dx/dist;
-				fy = dy/dist;
+				double dist = Math.sqrt(dx * dx + dy * dy); // norm of (dx, dy)
+				fx = dx / dist;
+				fy = dy / dist;
 
-				GameEngine.puck.setVelocityX((int)(puckSpeedX + ((radius + puckRadius) - dist) * fx));
-				GameEngine.puck.setVelocityY((int)(puckSpeedY + ((radius + puckRadius) - dist) * fy));
+				GameEngine.puck.setVelocityX((int) (puckSpeedX + ((radius + puckRadius) - dist) * fx));
+				GameEngine.puck.setVelocityY((int) (puckSpeedY + ((radius + puckRadius) - dist) * fy));
 			}
 		}
-
 	}
 
 	private double calculateDistance(float playerX, float playerY, int puckX, int puckY) {
@@ -134,12 +132,12 @@ public class Mallet{
 
 		if(GameEngine.puck.isInCorner()) {
 			if (GameEngine.puck.isInTopLeftCorner()) {
-				if (this.posY <= GameEngine.puck.board.getTopY() + 2 * GameEngine.puck.getRadius() &&
-						this.posX <= GameEngine.puck.board.getLeftX() + 2 * GameEngine.puck.getRadius()) {
+				if (this.posY <= GameEngine.puck.board.getTopY() + 2 * GameEngine.puck.getRadius
+						() &&
+						this.posX <= GameEngine.puck.board.getLeftX() + 2 * GameEngine.puck
+								.getRadius()) {
 					GameEngine.puck.setVelocityX(1);
 					GameEngine.puck.setVelocityY(1);
-					this.isMovingUp = false;
-					this.isMovingLeft = false;
 					this.posX += 0.5f;
 					this.posY += 0.5f;
 				} else {
@@ -147,12 +145,12 @@ public class Mallet{
 					this.posY += this.velocityY;
 				}
 			} else if (GameEngine.puck.isInBottomLeftCorner()) {
-				if (this.posY + 2 * this.radius >= GameEngine.puck.board.getBottomY() - 2 * GameEngine.puck.getRadius() &&
-						this.posX <= GameEngine.puck.board.getLeftX()	+ 2 * GameEngine.puck.getRadius()) {
+				if (this.posY + 2 * this.radius >= GameEngine.puck.board.getBottomY() - 2 *
+						GameEngine.puck.getRadius() &&
+						this.posX <= GameEngine.puck.board.getLeftX() + 2 * GameEngine.puck
+								.getRadius()) {
 					GameEngine.puck.setVelocityX(1);
 					GameEngine.puck.setVelocityY(-1);
-					this.isMovingDown = false;
-					this.isMovingLeft = false;
 					this.posX += 0.5f;
 					this.posY -= 0.5f;
 				} else {
@@ -160,12 +158,13 @@ public class Mallet{
 					this.posY += this.velocityY;
 				}
 			} else if (GameEngine.puck.isInTopRightCorner()) {
-				if (this.posY  <= GameEngine.puck.board.getTopY() + 2 * GameEngine.puck.getRadius() &&
-						this.posX + 2 * this.radius >= GameEngine.puck.board.getRightX() - 2 * GameEngine.puck.getRadius()) {
+				if (this.posY <= GameEngine.puck.board.getTopY() + 2 * GameEngine.puck
+						.getRadius
+						() - 4 &&
+						this.posX + 2 * this.radius >= GameEngine.puck.board.getRightX() - 2 *
+								GameEngine.puck.getRadius() + 4) {
 					GameEngine.puck.setVelocityX(-1);
 					GameEngine.puck.setVelocityY(1);
-					this.isMovingUp = false;
-					this.isMovingRight = false;
 					this.posX -= 0.5f;
 					this.posY += 0.5f;
 				} else {
@@ -173,18 +172,21 @@ public class Mallet{
 					this.posY += this.velocityY;
 				}
 			} else if (GameEngine.puck.isInBottomRightCorner()) {
-				if (this.posY + 2*this.radius >= GameEngine.puck.board.getBottomY() - 2 * GameEngine.puck.getRadius() &&
-						this.posX + 2 * this.radius >= GameEngine.puck.board.getRightX() - 2 * GameEngine.puck.getRadius()) {
+				if (this.posY + 2*this.radius >= GameEngine.puck.board.getBottomY() - 2 *
+						GameEngine.puck.getRadius() + 4 &&
+						this.posX + 2 * this.radius >= GameEngine.puck.board.getRightX() - 2 *
+								GameEngine.puck.getRadius() + 4) {
 					GameEngine.puck.setVelocityX(-1);
 					GameEngine.puck.setVelocityY(-1);
-					this.isMovingDown = false;
-					this.isMovingRight = false;
 					this.posX -= 0.5f;
 					this.posY -= 0.5f;
 				} else {
 					this.posX += this.velocityX;
 					this.posY += this.velocityY;
 				}
+			} else {
+				this.posX += this.velocityX;
+				this.posY += this.velocityY;
 			}
 		} else {
 			this.posY += this.velocityY;
