@@ -1,5 +1,7 @@
 package states;
 
+import gfx.Assets;
+
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
@@ -15,14 +17,19 @@ public class MenuState {
 		Font titleFont = new Font("arial", Font.BOLD, 50);
 		g.setFont(titleFont);
 		g.setColor(Color.LIGHT_GRAY);
-		g.drawString("Air Hockey", 475, 100);
+
+		g.drawImage(Assets.header, 428, 32, 352, 49, null);
+		g.drawImage(Assets.headerBackground, 180, 0, 802, 105, null);
 
 		Font buttonFont = new Font("arial", Font.BOLD, 30);
 		g.setFont(buttonFont);
 
-		drawButton(g2d, g, "Play Game", 530, 185, Color.LIGHT_GRAY, playButton);
-		drawButton(g2d, g, "Settings", 530, 285, Color.GREEN, settingsButton);
-		drawButton(g2d, g, "Quit Game", 530, 385, Color.RED, quitButton);
+		g.drawImage(Assets.playGame, 410, 135, 388, 89, null);
+		g.drawImage(Assets.settings, 410, 235, 388, 89, null);
+		g.drawImage(Assets.quitGame, 410, 335, 388, 89, null);
+		//drawButton(g2d, g, "Play Game", 530, 185, Color.LIGHT_GRAY, playButton);
+		//drawButton(g2d, g, "Settings", 530, 285, Color.GREEN, settingsButton);
+		//drawButton(g2d, g, "Quit Game", 530, 385, Color.RED, quitButton);
 	}
 
 	private RoundRectangle2D createButton(double x, double y) {

@@ -22,6 +22,7 @@ public class GameEngine implements Runnable{
     private Thread thread;
     private boolean isRunning;
 	private SpriteSheet numbers;
+    private SpriteSheet alphabet;
 	public static TaskManager tasks;
 
 	private MenuState mainMenu;
@@ -49,6 +50,7 @@ public class GameEngine implements Runnable{
         tasks = new TaskManager();
 
         this.numbers = new SpriteSheet(Assets.numbers, 60, 60);
+        this.alphabet = new SpriteSheet(Assets.alphabet, 30, 30);
 
         player1 = new Player("Player 1", 250, 325, 1);
         player2 = new Player("Player 2", 800, 325, 2);
@@ -83,7 +85,7 @@ public class GameEngine implements Runnable{
 	    this.g.drawImage(Assets.blackBG, 0,0, 1200, 800, null);
 
 	    if(State.getState() == StateManager.STATES.GAME) {
-		    this.game.render(this.g, player1, player2, puck, this.numbers);
+		    this.game.render(this.g, player1, player2, puck, this.numbers, this.alphabet);
 	    } else if(State.getState() == StateManager.STATES.MENU) {
 		    this.mainMenu.render(this.g);
 	    }
@@ -106,9 +108,8 @@ public class GameEngine implements Runnable{
         while(isRunning) {
             timeNow = System.nanoTime();
             delta += (timeNow - lastTime) / timePerTick;
-	        lastTime = timeNow;
-
             tasks.tick(timeNow - lastTime);
+	        lastTime = timeNow;
 
             if(delta >= 1) {
                 this.tick();

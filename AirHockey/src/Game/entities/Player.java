@@ -2,6 +2,7 @@ package Game.entities;
 
 public class Player {
 	private String name;
+	private int[] charKeyName;
 	private int score;
 
 	private Mallet mallet;
@@ -18,11 +19,26 @@ public class Player {
 	private Gate createGate(int field) {
 
 		if(field == 1) {
-			return new Gate(180 + 30, 80 + 200, 0, 400-200);
+			return new Gate(180 + 30, 50 + 200, 0, 400-200);
 		} else if(field == 2) {
-			return new Gate(180 + 800 - 30, 80 + 200, 0, 400-200);
+			return new Gate(180 + 800 - 30, 50 + 200, 0, 400-200);
 		}
 		return null;
+	}
+
+	public void convertNameCharsToKeys() {
+		this.charKeyName = new int[name.length()];
+		String upperName = this.name.toUpperCase();
+
+		for (int i = 0; i < this.name.length(); i++) {
+			this.charKeyName[i] = ((int)upperName.charAt(i)) - 65;
+			if(this.charKeyName[i] < 0) {
+				this.charKeyName[i] = ((int)upperName.charAt(i)) - 21;
+				if(this.charKeyName[i] < 25) {
+					this.charKeyName[i] = 26;
+				}
+			}
+		}
 	}
 
 	public String getName() {
@@ -33,6 +49,10 @@ public class Player {
 	public void setName(String name) {
 
 		this.name = name;
+	}
+
+	public int[] getCharKeyName() {
+		return charKeyName;
 	}
 
 	public int getScore() {
