@@ -8,7 +8,6 @@ import java.awt.*;
 import java.util.Random;
 
 public class Puck {
-    private final int SPEED_LIMIT = 10;
 	private double velocityX;
 	private double velocityY;
 	private int radius;
@@ -79,16 +78,12 @@ public class Puck {
         if(this.posY<this.board.getTopY()){
             this.posY=this.board.getTopY()+1;
             adjustFrictionY();
-            controlSpeedY();
-            controlSpeedX();
             velocityY = -velocityY;
         }
         //bottom
         if(this.posY+2*radius>this.board.getBottomY()){
             this.posY=this.board.getBottomY()-2*radius -1;
             adjustFrictionY();
-            controlSpeedY();
-            controlSpeedX();
             velocityY = -velocityY;
         }
         //left
@@ -111,8 +106,6 @@ public class Puck {
                 //bounce off
                 this.posX=this.board.getLeftX()+1;
                 adjustFrictionX();
-                controlSpeedY();
-                controlSpeedX();
                 velocityX = -velocityX;
             }
         }
@@ -137,8 +130,6 @@ public class Puck {
                 //bounce off
                 this.posX=this.board.getRightX()-2*radius-1;
                 adjustFrictionX();
-                controlSpeedY();
-                controlSpeedX();
                 velocityX = -velocityX;
             }
         }
@@ -160,24 +151,6 @@ public class Puck {
         }
     }
 
-    private void controlSpeedX() {
-        if (Math.abs(velocityX)>SPEED_LIMIT)
-            if (velocityX < 0) {
-                velocityX = -SPEED_LIMIT;
-            } else {
-                velocityX = SPEED_LIMIT;
-            }
-    }
-
-    private void controlSpeedY() {
-        if (Math.abs(velocityY)>SPEED_LIMIT) {
-            if (velocityY < 0) {
-                velocityY = -SPEED_LIMIT;
-            } else {
-                velocityY = SPEED_LIMIT;
-            }
-        }
-    }
 
     private void cornerCheck() {
         if (this.posY <= board.getTopY() + 2*this.radius - 4

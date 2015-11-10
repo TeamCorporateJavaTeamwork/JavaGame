@@ -13,6 +13,8 @@ public class Mallet{
     private float slideLevelX = 0.4f;
     private float slideLevelY = 0.4f;
     private float slideOpposition = -0.05f;
+	private final int SPEED_LIMIT_PUCK = 10;
+//	private final int SPEED_LIMIT_MALLET = 11;
 
     private BoundingBox board;
 
@@ -110,6 +112,21 @@ public class Mallet{
 
 				GameEngine.puck.setVelocityX((int) (puckSpeedX + ((radius + puckRadius) - dist) * fx));
 				GameEngine.puck.setVelocityY((int) (puckSpeedY + ((radius + puckRadius) - dist) * fy));
+
+				if(Math.abs(GameEngine.puck.getVelocityX()) > SPEED_LIMIT_PUCK) {
+					if(GameEngine.puck.getVelocityX() < 0) {
+						GameEngine.puck.setVelocityX(-SPEED_LIMIT_PUCK);
+					} else {
+						GameEngine.puck.setVelocityX(SPEED_LIMIT_PUCK);
+					}
+				}
+				if(Math.abs(GameEngine.puck.getVelocityY()) > SPEED_LIMIT_PUCK) {
+					if(GameEngine.puck.getVelocityY() < 0) {
+						GameEngine.puck.setVelocityY(-SPEED_LIMIT_PUCK);
+					} else {
+						GameEngine.puck.setVelocityY(SPEED_LIMIT_PUCK);
+					}
+				}
 			}
 		}
 	}
@@ -129,6 +146,26 @@ public class Mallet{
 	}
 	private void move() {
 		//New Moving Method -> Have Other Minor Bugs -> Code is unclean
+
+		//I added this piece of code but it's commented because:
+		//It is useful but very heavy check for every tick -> game runs a lot smoother without it
+		//If we want to be completely realistic we should do it but in my opinion game runs way
+		//better without it, yet I leave the code to be uncommented if needed.
+
+//		if(this.velocityX > SPEED_LIMIT_MALLET) {
+//			if(this.velocityX < 0) {
+//				this.velocityX = -SPEED_LIMIT_MALLET;
+//			} else {
+//				this.velocityX = SPEED_LIMIT_MALLET;
+//			}
+//		}
+//		if(this.velocityY > SPEED_LIMIT_MALLET) {
+//			if(this.velocityY < 0) {
+//				this.velocityY = -SPEED_LIMIT_MALLET;
+//			} else {
+//				this.velocityY = SPEED_LIMIT_MALLET;
+//			}
+//		}
 
 		if(GameEngine.puck.isInCorner()) {
 			if (GameEngine.puck.isInTopLeftCorner()) {
