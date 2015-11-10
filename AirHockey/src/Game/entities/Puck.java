@@ -20,7 +20,7 @@ public class Puck {
     private boolean isInCorner, isInTopLeftCorner,
                         isInBottomLeftCorner, isInTopRightCorner,
                             isInBottomRightCorner;
-
+    private boolean hasGoal;
     public Puck() {
 
         this.posX = 550;
@@ -30,6 +30,7 @@ public class Puck {
         this.redHasLost = true;
         this.roundStart = true;
         this.radius = 30;
+        this.hasGoal = false;
 
         this.board = new BoundingBox(180+29,80+52,800-52,600-105);
     }
@@ -93,13 +94,19 @@ public class Puck {
         //left
         if(this.posX<=this.board.getLeftX()){
             //if puck is between goalLine topY and bottomY -> reset game
-            if(this.posY >= GameEngine.player1.getGate().getBox().getTopY()
-                    && this.posY <= GameEngine.player1.getGate().getBox().getBottomY()){
-	            GameEngine.player2.setScore(GameEngine.player2.getScore() + 1);
-                this.redHasLost = false;
-                this.roundStart = true;
-	            GameEngine.resetPositions();
-            } else {
+            if((this.posY >= GameEngine.player1.getGate().getBox().getTopY()
+                    && this.posY <= GameEngine.player1.getGate().getBox().getBottomY())
+                    || hasGoal){
+                hasGoal = true;
+                if (this.posX <= GameEngine.player1.getGate().getBox().getLeftX() - 90) {
+                    GameEngine.player2.setScore(GameEngine.player2.getScore() + 1);
+                    this.redHasLost = false;
+                    this.roundStart = true;
+                    hasGoal = false;
+                    GameEngine.resetPositions();
+                }
+            } else if(this.posY <= GameEngine.player1.getGate().getBox().getTopY()
+                    || this.posY >= GameEngine.player1.getGate().getBox().getBottomY()) {
                 //bounce off
                 this.posX=this.board.getLeftX()+1;
                 adjustFrictionX();
@@ -111,14 +118,20 @@ public class Puck {
         //right
         if(this.posX+2*radius>this.board.getRightX()){
             //if puck is between goalLine topY and bottomY -> reset game
-            if(this.posY >= GameEngine.player2.getGate().getBox().getTopY()
-                    && this.posY <= GameEngine.player2.getGate().getBox().getBottomY()){
-	            GameEngine.player1.setScore(GameEngine.player1.getScore() + 1);
-                this.redHasLost = true;
-                this.roundStart = true;
-	            GameEngine.resetPositions();
+            if((this.posY >= GameEngine.player2.getGate().getBox().getTopY()
+                    && this.posY <= GameEngine.player2.getGate().getBox().getBottomY())
+                    || hasGoal){
+                hasGoal = true;
+                if(this.posX + 2*this.radius >= GameEngine.player2.getGate().getBox().getRightX() + 90) {
+                    GameEngine.player1.setScore(GameEngine.player1.getScore() + 1);
+                    this.redHasLost = true;
+                    this.roundStart = true;
+                    hasGoal = false;
+                    GameEngine.resetPositions();
+                }
                 //game reset;
-            } else {
+            } else if(this.posY <= GameEngine.player2.getGate().getBox().getTopY() ||
+                    this.posY >= GameEngine.player2.getGate().getBox().getBottomY()){
                 //bounce off
                 this.posX=this.board.getRightX()-2*radius-1;
                 adjustFrictionX();
