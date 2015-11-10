@@ -70,23 +70,23 @@ public class Mallet{
         //collision with board
 		//we define a circle by the most top left point of the smallest rectangle that can engulf the circle
 		//if mallet X exceeds maxX allowed then we put it at the right border
-		if(this.posX+2*radius>this.board.getRightX()){
-			this.posX=this.board.getRightX()-2*radius-1;
+		if(this.posX + 2 * radius > this.board.getRightX()){
+			this.posX = this.board.getRightX() - 2 * radius-1;
 			this.velocityX = -0.5f; //if mallet hit right border to bounce
 		}
 		//if mallet X is less than allowed - put mallet at left border;
 		if(this.posX<this.board.getLeftX()){
-			this.posX=this.board.getLeftX()+1;
+			this.posX=this.board.getLeftX() + 1;
 			this.velocityX = 0.5f; //if mallet hit left border to bounce
 		}
 		// if mallet y is less than allowed( is above board) put it at top border;
-		if(this.posY<this.board.getTopY()){
-			this.posY=this.board.getTopY()+1;
+		if(this.posY < this.board.getTopY()){
+			this.posY = this.board.getTopY() + 1;
 			this.velocityY = 0.5f; //if mallet hit top border to bounce
 		}
 		//if mallet y is more than allowed ( is below board) put it at bottom border;
-		if(this.posY+2*radius>this.board.getBottomY()){
-			this.posY=this.board.getBottomY()-2*radius -1;
+		if(this.posY + 2 * radius > this.board.getBottomY()){
+			this.posY = this.board.getBottomY() - 2 * radius - 1;
 			this.velocityY = -0.5f; //if mallet hit bottom border to bounce
 		}
 	}

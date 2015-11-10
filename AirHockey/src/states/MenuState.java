@@ -3,7 +3,6 @@ package states;
 import gfx.Assets;
 
 import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
 
 public class MenuState {
 

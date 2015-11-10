@@ -9,6 +9,12 @@ public class Display {
     public static final int HEIGHT = 800;
 
     String name;
+
+    public JFrame getFrame() {
+
+        return frame;
+    }
+
     private JFrame frame;
     private Canvas canvas;
 

@@ -15,14 +15,14 @@ public class MouseInputHandler implements MouseListener{
 		int mouseY = e.getY();
 
 		if(mouseX >= 430 && mouseX <= 770) {
-			if(mouseY >= 150 && mouseY <= 200 && MenuState.isOn == true) {
+			if(mouseY >= 150 && mouseY <= 200 && MenuState.isOn) {
 				MenuState.isOn = false;
 				GameEngine.player1.setName(GameEngine.getPlayerName(1));
 				GameEngine.player1.convertNameCharsToKeys();
 				GameEngine.player2.setName(GameEngine.getPlayerName(2));
 				GameEngine.player2.convertNameCharsToKeys();
 				GameEngine.State.setState(StateManager.STATES.GAME);
-			} else if (mouseY >= 350 && mouseY <= 400 && MenuState.isOn == true) {
+			} else if (mouseY >= 350 && mouseY <= 400 && MenuState.isOn) {
 				MenuState.isOn = false;
 				System.exit(1);
 			}

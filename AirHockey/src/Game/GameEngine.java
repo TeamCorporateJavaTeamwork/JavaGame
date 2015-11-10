@@ -140,7 +140,7 @@ public class GameEngine implements Runnable{
     public static String getPlayerName(int player) {
         String playerName;
         do {
-            playerName = JOptionPane.showInputDialog("Please enter player " + player + " name:", "Player " + player);
+            playerName = JOptionPane.showInputDialog(null, "Please enter player " + player + " name:", "Please enter player name", JOptionPane.INFORMATION_MESSAGE, null, null, "Player " + player).toString(); //JOptionPane.showInputDialog("Please enter player " + player + " name:", "Player " + player);
         } while (playerName == null || playerName.equals("") || playerName.equals(" "));
 
         return playerName;
