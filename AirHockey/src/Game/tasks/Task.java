@@ -6,11 +6,12 @@ public class Task {
     public double timePerTick;
     public boolean isOn = true;
     //if task is to moving anim
-    public int position = 0;
+    public int position;
 
-    public Task(int fps) {
+    public Task(int fps, int pos) {
         this.fps = fps;
         this.timePerTick = 1_000_000_000.0 / this.fps;
+        this.position = pos;
     }
 
     public void start() {

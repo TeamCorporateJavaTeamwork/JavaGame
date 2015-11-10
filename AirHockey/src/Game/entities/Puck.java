@@ -103,6 +103,7 @@ public class Puck {
                     this.redHasLost = false;
                     this.roundStart = true;
                     hasGoal = false;
+                    GameEngine.setShouldCountDown(true);
                     GameEngine.resetPositions();
                 }
             } else if(this.posY <= GameEngine.player1.getGate().getBox().getTopY()
@@ -127,6 +128,7 @@ public class Puck {
                     this.redHasLost = true;
                     this.roundStart = true;
                     hasGoal = false;
+                    GameEngine.setShouldCountDown(true);
                     GameEngine.resetPositions();
                 }
                 //game reset;
@@ -183,7 +185,7 @@ public class Puck {
             this.isInTopLeftCorner = true;
             this.isInCorner = true;
         } else if(this.posY + 2*this.radius - 4 >= board.getBottomY() - 2*this.radius + 4
-                    && this.posX <= board.getLeftX() + 2*this.radius){
+                && this.posX <= board.getLeftX() + 2*this.radius){
             this.isInBottomLeftCorner = true;
             this.isInCorner = true;
         } else if(this.posY <= board.getTopY() + 2*this.radius - 4

@@ -32,6 +32,7 @@ public class GameEngine implements Runnable{
     public static Player player1;
     public static Player player2;
 	public static StateManager State;
+    private static boolean shouldCountDown;
 
 	public GameEngine(String name) {
         this.title = name;
@@ -58,11 +59,12 @@ public class GameEngine implements Runnable{
     }
 
     private void tick() {
-	    if(State.getState() == StateManager.STATES.GAME) {
+        if(!GameEngine.isShouldCountDown()&&State.getState() == StateManager.STATES.GAME) {
             player1.getMallet().tick();
 		    player2.getMallet().tick();
             puck.tick();
         }
+
     }
     public static void resetPositions(){
         puck.reset();
@@ -144,5 +146,13 @@ public class GameEngine implements Runnable{
         } while (playerName == null || playerName.equals("") || playerName.equals(" "));
 
         return playerName;
+    }
+
+    public static boolean isShouldCountDown() {
+        return shouldCountDown;
+    }
+
+    public static void setShouldCountDown(boolean should) {
+        shouldCountDown = should;
     }
 }

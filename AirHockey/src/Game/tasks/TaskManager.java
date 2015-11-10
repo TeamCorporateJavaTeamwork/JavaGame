@@ -1,11 +1,16 @@
 package Game.tasks;
 
+import Game.GameEngine;
+import states.GameState;
+
 public class TaskManager {
 
-	private Task puckAnimation;
+    private Task puckAnimation;
+    public Task countDown;
 
     public TaskManager() {
-        puckAnimation = new Task(14);
+        countDown = new Task(3, 3);
+        puckAnimation = new Task(14, 0);
     }
 
     public void tick(long timeDeduct) {
@@ -14,6 +19,13 @@ public class TaskManager {
             if(puckAnimation.delta >= 1) {
                 puckAnimationPos();
                 puckAnimation.delta--;
+            }
+        }
+        if(GameEngine.isShouldCountDown()) {
+            countDown.delta += timeDeduct / countDown.timePerTick;
+            if(countDown.delta >= 1) {
+                countDownAnimationPos();
+                countDown.delta--;
             }
         }
     }
@@ -25,9 +37,18 @@ public class TaskManager {
         }
     }
 
-	public Task getPuckAnimation() {
+    private void countDownAnimationPos(){
+        countDown.position--;
+        if(countDown.position<1){
+            countDown.position=3;
+            //if 0 is reached > stop counting down;
+            GameEngine.setShouldCountDown(false);
+        }
+    }
 
-		return puckAnimation;
-	}
+    public Task getPuckAnimation() {
+
+        return puckAnimation;
+    }
 
 }
