@@ -7,7 +7,6 @@ import gfx.Assets;
 import gfx.SpriteSheet;
 
 import java.awt.*;
-import java.util.concurrent.TimeUnit;
 
 public class GameState {
 

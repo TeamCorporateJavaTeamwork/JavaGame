@@ -3,6 +3,7 @@ package Game.entities;
 import Game.GameEngine;
 import gfx.Assets;
 import gfx.SpriteSheet;
+import states.StateManager;
 
 import java.awt.*;
 import java.util.Random;
@@ -95,6 +96,10 @@ public class Puck {
                 hasGoal = true;
                 if (this.posX <= GameEngine.player1.getGate().getBox().getLeftX() - 90) {
                     GameEngine.player2.setScore(GameEngine.player2.getScore() + 1);
+                    if(GameEngine.player2.getScore() == 7) {
+                        GameEngine.State.setState(StateManager.STATES.VICTORY);
+                        return;
+                    }
                     this.redHasLost = false;
                     this.roundStart = true;
                     hasGoal = false;
@@ -118,6 +123,10 @@ public class Puck {
                 hasGoal = true;
                 if(this.posX + 2*this.radius >= GameEngine.player2.getGate().getBox().getRightX() + 90) {
                     GameEngine.player1.setScore(GameEngine.player1.getScore() + 1);
+                    if(GameEngine.player1.getScore() == 7) {
+                        GameEngine.State.setState(StateManager.STATES.VICTORY);
+                        return;
+                    }
                     this.redHasLost = true;
                     this.roundStart = true;
                     hasGoal = false;

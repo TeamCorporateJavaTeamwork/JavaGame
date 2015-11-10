@@ -9,6 +9,7 @@ import gfx.SpriteSheet;
 import states.GameState;
 import states.MenuState;
 import states.StateManager;
+import states.VictoryState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +26,7 @@ public class GameEngine implements Runnable{
     private SpriteSheet alphabet;
 	public static TaskManager tasks;
 
+    private VictoryState victoryScreen;
 	private MenuState mainMenu;
 	private GameState game;
 
@@ -47,6 +49,7 @@ public class GameEngine implements Runnable{
 
 	    State = new StateManager();
 	    this.mainMenu = new MenuState();
+        this.victoryScreen = new VictoryState();
 	    this.game = new GameState();
         tasks = new TaskManager();
 
@@ -90,9 +93,11 @@ public class GameEngine implements Runnable{
 		    this.game.render(this.g, player1, player2, puck, this.numbers, this.alphabet);
 	    } else if(State.getState() == StateManager.STATES.MENU) {
 		    this.mainMenu.render(this.g);
-	    }
+	    } else if(State.getState() == StateManager.STATES.VICTORY) {
+            this.victoryScreen.render(this.g, alphabet);
+        }
 
-	    //Stop Drawing
+        //Stop Drawing
         this.g.dispose();
         this.bs.show();
     }

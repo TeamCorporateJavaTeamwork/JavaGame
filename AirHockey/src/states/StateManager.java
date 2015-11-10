@@ -4,6 +4,8 @@ public class StateManager {
 	public enum STATES {
 		GAME,
 		SETTINGS,
+		VICTORY,
+		PAUSE,
 		MENU
 	}
 
