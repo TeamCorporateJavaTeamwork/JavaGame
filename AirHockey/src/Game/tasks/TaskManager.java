@@ -9,7 +9,8 @@ public class TaskManager {
     public Task countDown;
 
     public TaskManager() {
-        countDown = new Task(3, 3);
+        //every digit takes 1/2 of a second
+        countDown = new Task(2, 3);
         puckAnimation = new Task(14, 0);
     }
 
