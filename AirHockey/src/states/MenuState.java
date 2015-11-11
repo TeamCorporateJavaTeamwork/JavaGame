@@ -23,7 +23,7 @@ public class MenuState {
 		g.setFont(buttonFont);
 
 		g.drawImage(Assets.playGame, 410, 135, 388, 89, null);
-		g.drawImage(Assets.settings, 410, 235, 388, 89, null);
+		g.drawImage(Assets.settingsButton, 410, 235, 388, 89, null);
 		g.drawImage(Assets.quitGame, 410, 335, 388, 89, null);
 
 		g.drawImage(Assets.info, 200, 460, 800, 220, null);

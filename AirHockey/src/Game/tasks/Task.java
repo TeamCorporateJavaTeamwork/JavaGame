@@ -25,4 +25,10 @@ public class Task {
         this.isOn = false;
         this.position = 0;
     }
+
+    public void resetAnimation() {
+        this.isOn = false;
+        this.position = 0;
+        this.position2 = 0;
+    }
 }

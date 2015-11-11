@@ -36,10 +36,10 @@ public class InputHandler implements KeyListener {
             GameEngine.player1.getMallet().isMovingRight = true;
         }
         if (keyCode == KeyEvent.VK_P) {
-            if(!GameEngine.isPause && GameEngine.State.getState().toString() == "GAME") {
+            if(!GameEngine.isPause && GameEngine.State.getState() == StateManager.STATES.GAME) {
                 GameEngine.isPause = true;
                 GameEngine.State.setState(StateManager.STATES.PAUSE);
-            } else {
+            } else if(GameEngine.State.getState() == StateManager.STATES.PAUSE) {
                 GameEngine.isPause = false;
                 GameEngine.State.setState(StateManager.STATES.GAME);
             }

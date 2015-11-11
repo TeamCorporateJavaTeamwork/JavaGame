@@ -63,14 +63,13 @@ public class TaskManager {
     }
     private void victoryAnimationFireworksPos() {
         victoryAnimationFireworks.position++;
-        if(victoryAnimationFireworks.position > 7 && victoryAnimationFireworks.position2 < 2)
+        if(victoryAnimationFireworks.position > 7)
         {
             victoryAnimationFireworks.position = 0;
             victoryAnimationFireworks.position2++;
-        }
-        if(victoryAnimationFireworks.position2 == 2 && victoryAnimationFireworks.position == 8) {
-            victoryAnimationFireworks.position = 7;
-            victoryAnimationFireworks.isOn = false;
+            if(victoryAnimationFireworks.position2 > 2) {
+                victoryAnimationFireworks.position2 = 0;
+            }
         }
     }
 

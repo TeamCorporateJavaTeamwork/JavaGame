@@ -1,9 +1,7 @@
 package Game;
 
 import gfx.Assets;
-import states.MenuState;
-import states.SettingsState;
-import states.StateManager;
+import states.*;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -17,23 +15,46 @@ public class MouseInputHandler implements MouseListener{
 		int mouseX = e.getX();
 		int mouseY = e.getY();
 
-		if(mouseX >= 430 && mouseX <= 770) {
-			if(mouseY >= 150 && mouseY <= 200 && (MenuState.isOn ||  SettingsState.isOn)) {
-				MenuState.isOn = false;
+		if(MenuState.isOn) {
+			if(mouseX >= 430 && mouseX <= 770) {
+				if(mouseY >= 150 && mouseY <= 200) {
+					MenuState.isOn = false;
 
-				GameEngine.player1.setName(GameEngine.getPlayerName(1));
-				GameEngine.player1.convertNameCharsToKeys();
-				GameEngine.player2.setName(GameEngine.getPlayerName(2));
-				GameEngine.player2.convertNameCharsToKeys();
-				GameEngine.State.setState(StateManager.STATES.GAME);
+					GameEngine.player1.setName(GameEngine.getPlayerName(1));
+					GameEngine.player1.convertNameCharsToKeys();
+					GameEngine.player2.setName(GameEngine.getPlayerName(2));
+					GameEngine.player2.convertNameCharsToKeys();
+					GameEngine.State.setState(StateManager.STATES.GAME);
 
-			} else if (mouseY >= 350 && mouseY <= 400 && MenuState.isOn) {
-				MenuState.isOn = false;
-				System.exit(1);
-			} else if (mouseY >= 250 && mouseY <= 300 && MenuState.isOn) {
-				GameEngine.State.setState(StateManager.STATES.SETTINGS);
-				MenuState.isOn = false;
-				SettingsState.isOn = true;
+				} else if (mouseY >= 350 && mouseY <= 400 && MenuState.isOn) {
+					MenuState.isOn = false;
+					System.exit(1);
+				} else if (mouseY >= 250 && mouseY <= 300 && MenuState.isOn) {
+					GameEngine.State.setState(StateManager.STATES.SETTINGS);
+					MenuState.isOn = false;
+					SettingsState.isOn = true;
+				}
+			}
+		}
+		if(SettingsState.isOn) {
+			if(mouseX >= 430 && mouseX <= 770) {
+				if (mouseY >= 150 && mouseY <= 200) {
+					SettingsState.isOn = false;
+					MenuState.isOn = true;
+					GameEngine.State.setState(StateManager.STATES.MENU);
+				}
+			}
+		}
+		if(VictoryState.isOn) {
+			if(mouseX >= 430 && mouseX <= 770) {
+				if (mouseY >= 350 && mouseY <= 400) {
+					VictoryState.resetValues();
+					GameEngine.State.setState(StateManager.STATES.GAME);
+				} else if (mouseY >= 450 && mouseY <= 500) {
+					VictoryState.resetValues();
+					MenuState.isOn = true;
+					GameEngine.State.setState(StateManager.STATES.MENU);
+				}
 			}
 		}
 	}
