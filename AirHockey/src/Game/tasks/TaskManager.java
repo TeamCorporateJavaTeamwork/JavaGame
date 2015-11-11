@@ -68,7 +68,7 @@ public class TaskManager {
             victoryAnimationFireworks.position = 0;
             victoryAnimationFireworks.position2++;
         }
-        if(victoryAnimationFireworks.position2 == 2 && victoryAnimation.position == 8) {
+        if(victoryAnimationFireworks.position2 == 2 && victoryAnimationFireworks.position == 8) {
             victoryAnimation.position = 7;
             victoryAnimationFireworks.isOn = false;
         }

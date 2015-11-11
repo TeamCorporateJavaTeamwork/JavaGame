@@ -9,7 +9,7 @@ public class Player {
 	private Gate gate;
 
 	public Player(String name, int posX, int posY, int field) {
-		this.score = 6;
+		this.score = 0;
 		this.name = name;
 		this.mallet = new Mallet(posX, posY, field);
 		
