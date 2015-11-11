@@ -23,6 +23,8 @@ public class GameEngine implements Runnable{
     private boolean isRunning;
 	private SpriteSheet numbers;
     private SpriteSheet alphabet;
+    private SpriteSheet victoryAnimation;
+    private SpriteSheet victoryAnimation2;
 	public static TaskManager tasks;
     public static boolean isPause;
 
@@ -61,6 +63,8 @@ public class GameEngine implements Runnable{
 
         this.numbers = new SpriteSheet(Assets.numbers, 60, 60);
         this.alphabet = new SpriteSheet(Assets.alphabet, 30, 30);
+        this.victoryAnimation = new SpriteSheet(Assets.victoryAnim, 500, 160);
+        this.victoryAnimation2 = new SpriteSheet(Assets.victoryAnim2, 200, 200);
 
         color1 = new ColorSwitcher();
         color2 = new ColorSwitcher();
@@ -104,7 +108,7 @@ public class GameEngine implements Runnable{
 		    this.mainMenu.render(this.g);
 	    } else if(State.getState() == StateManager.STATES.VICTORY) {
             this.game.render(this.g, player1, player2, puck, this.numbers, this.alphabet);
-            this.victoryScreen.render(this.g, alphabet);
+            this.victoryScreen.render(this.g, this.alphabet, this.victoryAnimation, this.victoryAnimation2);
         } else if(State.getState() == StateManager.STATES.PAUSE) {
             this.game.render(this.g, player1, player2, puck, this.numbers, this.alphabet);
             this.pause.render(this.g);

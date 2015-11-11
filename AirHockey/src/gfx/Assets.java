@@ -16,20 +16,28 @@ public class Assets {
     public static BufferedImage settings;
     public static BufferedImage quitGame;
     public static BufferedImage paused;
+    public static BufferedImage gates;
+    public static BufferedImage victoryAnim;
+    public static BufferedImage victoryAnim2;
+    public static BufferedImage info;
 
     public static void init() {
-        background = ImageLoader.loadImage("/Textures/hockey field.png");
+        background = ImageLoader.loadImage("/Textures/field/hockey field.png");
         puck = ImageLoader.loadImage("/Textures/puck.png");
-        puckAnim = ImageLoader.loadImage("/Textures/puckAnimation.png");
-        numbers = ImageLoader.loadImage("/Textures/numbers.png");
+        puckAnim = ImageLoader.loadImage("/Textures/animations/puckAnimation.png");
+        numbers = ImageLoader.loadImage("/Textures/spriteSheets/numbers.png");
         blackBG = ImageLoader.loadImage("/Textures/backgrounds/main.jpg");
         malletTemplate = ImageLoader.loadImage("/Textures/malletTemplate.png");
-        alphabet = ImageLoader.loadImage("/Textures/alphabet.png");
+        alphabet = ImageLoader.loadImage("/Textures/spriteSheets/alphabet.png");
         headerBackground = ImageLoader.loadImage("/Textures/backgrounds/header.png");
         header = ImageLoader.loadImage("/Textures/header.png");
         playGame = ImageLoader.loadImage("/Textures/buttons/playGame.png");
         settings = ImageLoader.loadImage("/Textures/buttons/settings.png");
         quitGame = ImageLoader.loadImage("/Textures/buttons/quitGame.png");
-        paused = ImageLoader.loadImage("/Textures/paused.png");
+        paused = ImageLoader.loadImage("/Textures/pause.png");
+        gates = ImageLoader.loadImage("/Textures/field/gates.png");
+        victoryAnim = ImageLoader.loadImage("/Textures/animations/victoryAnimation.png");
+        victoryAnim2 = ImageLoader.loadImage("/Textures/animations/victoryAnimation2.png");
+        info = ImageLoader.loadImage("/Textures/info.png");
     }
 }

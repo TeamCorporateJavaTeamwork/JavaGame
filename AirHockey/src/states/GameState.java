@@ -23,6 +23,9 @@ public class GameState {
 		puck.render(g);
 		g.setColor(Color.red);
 
+		//drawing gates
+		g.drawImage(Assets.gates, 0, 0, 1200, 800, null);
+
 		//names background
 		g.drawImage(Assets.headerBackground, 180, 0, 802, 105, null);
 		//drawing names

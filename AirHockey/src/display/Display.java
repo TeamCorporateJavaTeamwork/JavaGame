@@ -1,5 +1,7 @@
 package display;
 
+import gfx.ImageLoader;
+
 import javax.swing.*;
 import java.awt.*;
 

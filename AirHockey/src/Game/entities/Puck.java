@@ -98,6 +98,7 @@ public class Puck {
                 if (this.posX <= GameEngine.player1.getGate().getBox().getLeftX() - 90) {
                     GameEngine.player2.setScore(GameEngine.player2.getScore() + 1);
                     if(GameEngine.player2.getScore() == 7) {
+                        GameEngine.tasks.victoryAnimation.start();
                         GameEngine.State.setState(StateManager.STATES.VICTORY);
                         return;
                     }
@@ -125,6 +126,7 @@ public class Puck {
                 if(this.posX + 2 * this.radius >= GameEngine.player2.getGate().getBox().getRightX() + 90) {
                     GameEngine.player1.setScore(GameEngine.player1.getScore() + 1);
                     if(GameEngine.player1.getScore() == 7) {
+                        GameEngine.tasks.victoryAnimation.start();
                         GameEngine.State.setState(StateManager.STATES.VICTORY);
                         return;
                     }
