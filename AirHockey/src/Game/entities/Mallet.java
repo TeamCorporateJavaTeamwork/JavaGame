@@ -110,8 +110,8 @@ public class Mallet{
 				fx = dx / dist;
 				fy = dy / dist;
 
-				GameEngine.puck.setVelocityX((int) (puckSpeedX + ((radius + puckRadius) - dist) * fx));
-				GameEngine.puck.setVelocityY((int) (puckSpeedY + ((radius + puckRadius) - dist) * fy));
+				GameEngine.puck.setVelocityX((puckSpeedX + ((radius + puckRadius) - dist) * fx));
+				GameEngine.puck.setVelocityY((puckSpeedY + ((radius + puckRadius) - dist) * fy));
 
 				if(Math.abs(GameEngine.puck.getVelocityX()) > SPEED_LIMIT_PUCK) {
 					if(GameEngine.puck.getVelocityX() < 0) {
