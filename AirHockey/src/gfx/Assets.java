@@ -15,6 +15,7 @@ public class Assets {
     public static BufferedImage playGame;
     public static BufferedImage settings;
     public static BufferedImage quitGame;
+    public static BufferedImage paused;
 
     public static void init() {
         background = ImageLoader.loadImage("/Textures/hockey field.png");
@@ -29,5 +30,6 @@ public class Assets {
         playGame = ImageLoader.loadImage("/Textures/buttons/playGame.png");
         settings = ImageLoader.loadImage("/Textures/buttons/settings.png");
         quitGame = ImageLoader.loadImage("/Textures/buttons/quitGame.png");
+        paused = ImageLoader.loadImage("/Textures/paused.png");
     }
 }

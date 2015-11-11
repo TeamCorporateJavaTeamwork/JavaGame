@@ -6,10 +6,7 @@ import display.Display;
 import Game.tasks.TaskManager;
 import gfx.Assets;
 import gfx.SpriteSheet;
-import states.GameState;
-import states.MenuState;
-import states.StateManager;
-import states.VictoryState;
+import states.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,10 +22,12 @@ public class GameEngine implements Runnable{
 	private SpriteSheet numbers;
     private SpriteSheet alphabet;
 	public static TaskManager tasks;
+    public static boolean isPause;
 
     private VictoryState victoryScreen;
 	private MenuState mainMenu;
 	private GameState game;
+    private PauseState pause;
 
     public static Puck puck;
     public static Player player1;
@@ -50,6 +49,7 @@ public class GameEngine implements Runnable{
 	    State = new StateManager();
 	    this.mainMenu = new MenuState();
         this.victoryScreen = new VictoryState();
+        this.pause = new PauseState();
 	    this.game = new GameState();
         tasks = new TaskManager();
 
@@ -94,7 +94,11 @@ public class GameEngine implements Runnable{
 	    } else if(State.getState() == StateManager.STATES.MENU) {
 		    this.mainMenu.render(this.g);
 	    } else if(State.getState() == StateManager.STATES.VICTORY) {
+            this.game.render(this.g, player1, player2, puck, this.numbers, this.alphabet);
             this.victoryScreen.render(this.g, alphabet);
+        } else if(State.getState() == StateManager.STATES.PAUSE) {
+            this.game.render(this.g, player1, player2, puck, this.numbers, this.alphabet);
+            this.pause.render(this.g);
         }
 
         //Stop Drawing

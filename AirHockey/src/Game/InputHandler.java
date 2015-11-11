@@ -1,5 +1,7 @@
 package Game;
 
+import states.StateManager;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -32,6 +34,15 @@ public class InputHandler implements KeyListener {
         }
         if (keyCode == KeyEvent.VK_D) {
             GameEngine.player1.getMallet().isMovingRight = true;
+        }
+        if (keyCode == KeyEvent.VK_P) {
+            if(!GameEngine.isPause && GameEngine.State.getState().toString() == "GAME") {
+                GameEngine.isPause = true;
+                GameEngine.State.setState(StateManager.STATES.PAUSE);
+            } else {
+                GameEngine.isPause = false;
+                GameEngine.State.setState(StateManager.STATES.GAME);
+            }
         }
     }
 
