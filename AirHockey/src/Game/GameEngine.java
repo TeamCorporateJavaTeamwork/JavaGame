@@ -120,17 +120,12 @@ public class GameEngine implements Runnable{
 	@Override
     public void run() {
         this.init();
-        int fps;
+        int fps = 60;
         double delta = 0;
         long timeNow;
         long lastTime = System.nanoTime();
 
         while(isRunning) {
-            if(State.getState() != StateManager.STATES.GAME) {
-                fps = 1000;
-            } else {
-                fps = 60;
-            }
             double timePerTick = 1_000_000_000.0 / fps;
             timeNow = System.nanoTime();
             delta += (timeNow - lastTime) / timePerTick;

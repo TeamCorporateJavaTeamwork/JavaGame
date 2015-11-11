@@ -19,9 +19,9 @@ public class Player {
 	private Gate createGate(int field) {
 
 		if(field == 1) {
-			return new Gate(180 + 30, 50 + 200, 0, 400-200);
+			return new Gate(180 + 30, 55 + 200, 0, 400-200);
 		} else if(field == 2) {
-			return new Gate(180 + 800 - 30, 50 + 200, 0, 400-200);
+			return new Gate(180 + 800 - 30, 55 + 200, 0, 400-200);
 		}
 		return null;
 	}

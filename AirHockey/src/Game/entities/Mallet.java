@@ -10,8 +10,8 @@ public class Mallet{
     private float posX, posY;
     private int radius;
     private float velocityX, velocityY;
-    private float slideLevelX = 0.4f;
-    private float slideLevelY = 0.4f;
+    private float slideLevelX = 0.5f;
+    private float slideLevelY = 0.5f;
     private float slideOpposition = -0.07f;
 	private final int SPEED_LIMIT_PUCK = 10;
 //	private final int SPEED_LIMIT_MALLET = 11;
