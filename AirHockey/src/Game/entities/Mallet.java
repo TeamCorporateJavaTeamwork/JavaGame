@@ -271,10 +271,10 @@ public class Mallet{
     }
 
     public void renderLeft(Graphics g) {
-        g.drawImage(ImageColorizer.dye(Assets.malletTemplate, new Color(0, 0, 255, 175)), Math.round(this.posX), Math.round(this.posY), null);
+        g.drawImage(ImageColorizer.dye(Assets.malletTemplate, GameEngine.color1.getColor()), Math.round(this.posX), Math.round(this.posY), null);
     }
     public void renderRight(Graphics g) {
-        g.drawImage(ImageColorizer.dye(Assets.malletTemplate, new Color(255, 0, 0, 175)), Math.round(this.posX), Math.round(this.posY), null);
+        g.drawImage(ImageColorizer.dye(Assets.malletTemplate, GameEngine.color2.getColor()), Math.round(this.posX), Math.round(this.posY), null);
     }
 
 }

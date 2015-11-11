@@ -5,12 +5,14 @@ import Game.entities.Puck;
 import display.Display;
 import Game.tasks.TaskManager;
 import gfx.Assets;
+import gfx.ColorSwitcher;
 import gfx.SpriteSheet;
 import states.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+
 
 public class GameEngine implements Runnable{
     private String title;
@@ -28,8 +30,11 @@ public class GameEngine implements Runnable{
 	private MenuState mainMenu;
 	private GameState game;
     private PauseState pause;
+    private SettingsState settingsMenu;
 
     public static Puck puck;
+    public static ColorSwitcher color1;
+    public static ColorSwitcher color2;
     public static Player player1;
     public static Player player2;
 	public static StateManager State;
@@ -49,6 +54,7 @@ public class GameEngine implements Runnable{
 	    State = new StateManager();
 	    this.mainMenu = new MenuState();
         this.victoryScreen = new VictoryState();
+        this.settingsMenu = new SettingsState();
         this.pause = new PauseState();
 	    this.game = new GameState();
         tasks = new TaskManager();
@@ -56,13 +62,16 @@ public class GameEngine implements Runnable{
         this.numbers = new SpriteSheet(Assets.numbers, 60, 60);
         this.alphabet = new SpriteSheet(Assets.alphabet, 30, 30);
 
+        color1 = new ColorSwitcher();
+        color2 = new ColorSwitcher();
+        color2.nextColor(color1.getColor());
         player1 = new Player("Player 1", 250, 325, 1);
         player2 = new Player("Player 2", 800, 325, 2);
         puck = new Puck();
     }
 
     private void tick() {
-        if(!GameEngine.isShouldCountDown()&&State.getState() == StateManager.STATES.GAME) {
+        if(!GameEngine.isShouldCountDown() && State.getState() == StateManager.STATES.GAME) {
             player1.getMallet().tick();
 		    player2.getMallet().tick();
             puck.tick();
@@ -99,6 +108,8 @@ public class GameEngine implements Runnable{
         } else if(State.getState() == StateManager.STATES.PAUSE) {
             this.game.render(this.g, player1, player2, puck, this.numbers, this.alphabet);
             this.pause.render(this.g);
+        } else if(State.getState() == StateManager.STATES.SETTINGS) {
+            this.settingsMenu.render(g, color1, color2);
         }
 
         //Stop Drawing
@@ -109,14 +120,18 @@ public class GameEngine implements Runnable{
 	@Override
     public void run() {
         this.init();
-
-        int fps = 60;
-        double timePerTick = 1_000_000_000.0 / fps;
+        int fps;
         double delta = 0;
         long timeNow;
         long lastTime = System.nanoTime();
 
         while(isRunning) {
+            if(State.getState() != StateManager.STATES.GAME) {
+                fps = 1000;
+            } else {
+                fps = 60;
+            }
+            double timePerTick = 1_000_000_000.0 / fps;
             timeNow = System.nanoTime();
             delta += (timeNow - lastTime) / timePerTick;
             tasks.tick(timeNow - lastTime);
@@ -150,8 +165,17 @@ public class GameEngine implements Runnable{
 
     public static String getPlayerName(int player) {
         String playerName;
+        JPanel dialog = new JPanel();
+        JLabel InputLabel = new JLabel("Please enter player " + player + " name: ");
+        JTextField textBoxInput = new JTextField("Player " + player, 10);
+        dialog.add(InputLabel);
+        dialog.add(textBoxInput);
+
+        String[] options = {"OK"};
         do {
-            playerName = JOptionPane.showInputDialog(null, "Please enter player " + player + " name:", "Please enter player name", JOptionPane.INFORMATION_MESSAGE, null, null, "Player " + player).toString(); //JOptionPane.showInputDialog("Please enter player " + player + " name:", "Player " + player);
+            JOptionPane.showOptionDialog(null, dialog, "Please enter player name", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            playerName = textBoxInput.getText();
+            //playerName = JOptionPane.showInputDialog(null, "Please enter player " + player + " name:", "Please enter player name", JOptionPane.INFORMATION_MESSAGE, null, null, "Player " + player).toString();
         } while (playerName == null || playerName.equals("") || playerName.equals(" "));
 
         return playerName;
@@ -164,4 +188,6 @@ public class GameEngine implements Runnable{
     public static void setShouldCountDown(boolean should) {
         shouldCountDown = should;
     }
+
+
 }
