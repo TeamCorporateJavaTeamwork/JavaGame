@@ -12,7 +12,7 @@ public class Mallet{
     private float velocityX, velocityY;
     private float slideLevelX = 0.4f;
     private float slideLevelY = 0.4f;
-    private float slideOpposition = -0.05f;
+    private float slideOpposition = -0.07f;
 	private final int SPEED_LIMIT_PUCK = 10;
 //	private final int SPEED_LIMIT_MALLET = 11;
 
@@ -250,21 +250,8 @@ public class Mallet{
 	}
 
 	private void calculateSlideLevels() {
-		if(Math.abs(this.velocityX) > 3f) {
-			this.slideLevelX = 0.50f;
-		} else if(Math.abs(this.velocityX) > 2f) {
-			this.slideLevelX = 0.45f;
-		} else {
-			this.slideLevelX = 0.4f;
-		}
-
-		if(Math.abs(this.velocityY) > 3f) {
-			this.slideLevelY = 0.45f;
-		} else if (Math.abs(this.velocityY) > 2f) {
-			this.slideLevelY = 0.40f;
-		} else {
-			this.slideLevelY = 0.35f;
-		}
+		this.slideLevelX = 0.5f + Math.abs(this.velocityX * 0.03f);
+		this.slideLevelY = 0.5f + Math.abs(this.velocityY * 0.03f);
 	}
 
 	public void reset(int playerNum){
