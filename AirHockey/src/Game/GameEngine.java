@@ -40,7 +40,7 @@ public class GameEngine implements Runnable{
     public static Player player1;
     public static Player player2;
 	public static StateManager State;
-    private static boolean shouldCountDown;
+    private static boolean countDownNeeded;
 
 	public GameEngine(String name) {
         this.title = name;
@@ -75,7 +75,7 @@ public class GameEngine implements Runnable{
     }
 
     private void tick() {
-        if(!GameEngine.isShouldCountDown() && State.getState() == StateManager.STATES.GAME) {
+        if(!GameEngine.isCountDownNeeded() && State.getState() == StateManager.STATES.GAME) {
             player1.getMallet().tick();
 		    player2.getMallet().tick();
             puck.tick();
@@ -96,7 +96,6 @@ public class GameEngine implements Runnable{
 		    return;
 	    }
 	    this.g = this.bs.getDrawGraphics();
-
         this.g.clearRect(0, 0, Display.WIDTH, Display.HEIGHT);
 
         //Start Drawing
@@ -108,7 +107,7 @@ public class GameEngine implements Runnable{
 		    this.mainMenu.render(this.g);
 	    } else if(State.getState() == StateManager.STATES.VICTORY) {
             this.game.render(this.g, player1, player2, puck, this.numbers, this.alphabet);
-            this.victoryScreen.render(this.g, this.alphabet, this.victoryAnimation, this.victoryAnimation2);
+            this.victoryScreen.render(this.g, this.victoryAnimation, this.victoryAnimation2);
         } else if(State.getState() == StateManager.STATES.PAUSE) {
             this.game.render(this.g, player1, player2, puck, this.numbers, this.alphabet);
             this.pause.render(this.g);
@@ -174,18 +173,17 @@ public class GameEngine implements Runnable{
         do {
             JOptionPane.showOptionDialog(null, dialog, "Please enter player name", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             playerName = textBoxInput.getText();
-            //playerName = JOptionPane.showInputDialog(null, "Please enter player " + player + " name:", "Please enter player name", JOptionPane.INFORMATION_MESSAGE, null, null, "Player " + player).toString();
         } while (playerName == null || playerName.equals("") || playerName.equals(" "));
 
         return playerName;
     }
 
-    public static boolean isShouldCountDown() {
-        return shouldCountDown;
+    public static boolean isCountDownNeeded() {
+        return countDownNeeded;
     }
 
-    public static void setShouldCountDown(boolean should) {
-        shouldCountDown = should;
+    public static void setIsCountDownNeeded(boolean countDown) {
+        countDownNeeded = countDown;
     }
 
 

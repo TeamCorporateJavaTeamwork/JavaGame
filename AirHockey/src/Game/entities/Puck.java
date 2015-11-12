@@ -2,7 +2,6 @@ package Game.entities;
 
 import Game.GameEngine;
 import gfx.Assets;
-import states.GameState;
 import states.StateManager;
 import states.VictoryState;
 
@@ -18,12 +17,13 @@ public class Puck {
     private double wallFriction = 0.5D;
     private boolean redHasLost;
     private boolean roundStart;
-    private boolean isInCorner,
-            isInTopLeftCorner,
-            isInBottomLeftCorner,
-            isInTopRightCorner,
-            isInBottomRightCorner;
+    private boolean isInCorner;
+    private boolean isInTopLeftCorner;
+    private boolean isInBottomLeftCorner;
+    private boolean isInTopRightCorner;
+    private boolean isInBottomRightCorner;
     private boolean hasGoal;
+
     public Puck() {
 
         this.posX = 550;
@@ -79,47 +79,16 @@ public class Puck {
         //collision with board
         //we define a circle by the most top left point of the smallest rectangle that can engulf the circle
         //top
-        if(this.posY < this.board.getTopY()){
-            this.posY = this.board.getTopY() + 1;
-            adjustFrictionY();
-            velocityY = -velocityY;
-        }
+        topCollisionAndAngle();
         //bottom
-        if(this.posY + 2 * radius > this.board.getBottomY()){
-            this.posY = this.board.getBottomY() - 2 * radius - 1;
-            adjustFrictionY();
-            velocityY = -velocityY;
-        }
+        bottomCollisionAndAngle();
         //left
-        if(this.posX <= this.board.getLeftX()){
-            //if puck is between goalLine topY and bottomY -> reset game
-            if((this.posY >= GameEngine.player1.getGate().getBox().getTopY() &&
-                    this.posY <= GameEngine.player1.getGate().getBox().getBottomY()) ||
-                    hasGoal){
-                hasGoal = true;
-                if (this.posX <= GameEngine.player1.getGate().getBox().getLeftX() - 90) {
-                    GameEngine.player2.setScore(GameEngine.player2.getScore() + 1);
-                    if(GameEngine.player2.getScore() == 7) {
-                        VictoryState.isOn = true;
-                        GameEngine.tasks.victoryAnimation.isOn = true;
-                        GameEngine.State.setState(StateManager.STATES.VICTORY);
-                        return;
-                    }
-                    this.redHasLost = false;
-                    this.roundStart = true;
-                    hasGoal = false;
-                    GameEngine.setShouldCountDown(true);
-                    GameEngine.resetPositions();
-                }
-            } else if(this.posY <= GameEngine.player1.getGate().getBox().getTopY() ||
-                    this.posY >= GameEngine.player1.getGate().getBox().getBottomY()) {
-                //bounce off
-                this.posX = this.board.getLeftX() + 1;
-                adjustFrictionX();
-                velocityX = -velocityX;
-            }
-        }
+        LeftCollisionAndAngle();
         //right
+        RightCollisionAndAngle();
+    }
+
+    private void RightCollisionAndAngle() {
         if(this.posX + 2 * radius > this.board.getRightX()){
             //if puck is between goalLine topY and bottomY -> reset game
             if((this.posY >= GameEngine.player2.getGate().getBox().getTopY() &&
@@ -130,14 +99,14 @@ public class Puck {
                     GameEngine.player1.setScore(GameEngine.player1.getScore() + 1);
                     if(GameEngine.player1.getScore() == 7) {
                         VictoryState.isOn = true;
-                        GameEngine.tasks.victoryAnimation.isOn = true;
+                        GameEngine.tasks.victoryAnimation.setOn(true);
                         GameEngine.State.setState(StateManager.STATES.VICTORY);
                         return;
                     }
                     this.redHasLost = true;
                     this.roundStart = true;
                     hasGoal = false;
-                    GameEngine.setShouldCountDown(true);
+                    GameEngine.setIsCountDownNeeded(true);
                     GameEngine.resetPositions();
                 }
                 //game reset;
@@ -148,6 +117,53 @@ public class Puck {
                 adjustFrictionX();
                 velocityX = -velocityX;
             }
+        }
+    }
+
+    private void LeftCollisionAndAngle() {
+        if(this.posX <= this.board.getLeftX()){
+            //if puck is between goalLine topY and bottomY -> reset game
+            if((this.posY >= GameEngine.player1.getGate().getBox().getTopY() &&
+                    this.posY <= GameEngine.player1.getGate().getBox().getBottomY()) ||
+                    hasGoal){
+                hasGoal = true;
+                if (this.posX <= GameEngine.player1.getGate().getBox().getLeftX() - 90) {
+                    GameEngine.player2.setScore(GameEngine.player2.getScore() + 1);
+                    if(GameEngine.player2.getScore() == 7) {
+                        VictoryState.isOn = true;
+                        GameEngine.tasks.victoryAnimation.setOn(true);
+                        GameEngine.State.setState(StateManager.STATES.VICTORY);
+                        return;
+                    }
+                    this.redHasLost = false;
+                    this.roundStart = true;
+                    hasGoal = false;
+                    GameEngine.setIsCountDownNeeded(true);
+                    GameEngine.resetPositions();
+                }
+            } else if(this.posY <= GameEngine.player1.getGate().getBox().getTopY() ||
+                    this.posY >= GameEngine.player1.getGate().getBox().getBottomY()) {
+                //bounce off
+                this.posX = this.board.getLeftX() + 1;
+                adjustFrictionX();
+                velocityX = -velocityX;
+            }
+        }
+    }
+
+    private void bottomCollisionAndAngle() {
+        if(this.posY + 2 * radius > this.board.getBottomY()){
+            this.posY = this.board.getBottomY() - 2 * radius - 1;
+            adjustFrictionY();
+            velocityY = -velocityY;
+        }
+    }
+
+    private void topCollisionAndAngle() {
+        if(this.posY < this.board.getTopY()){
+            this.posY = this.board.getTopY() + 1;
+            adjustFrictionY();
+            velocityY = -velocityY;
         }
     }
 

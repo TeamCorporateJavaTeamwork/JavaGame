@@ -1,6 +1,5 @@
 package states;
 
-import Game.GameEngine;
 import gfx.Assets;
 
 import java.awt.*;

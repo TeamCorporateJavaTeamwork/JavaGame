@@ -7,9 +7,11 @@ import gfx.ImageColorizer;
 import java.awt.*;
 
 public class Mallet{
-    private float posX, posY;
+    private float posX;
+	private float posY;
     private int radius;
-    private float velocityX, velocityY;
+    private float velocityX;
+	private float velocityY;
     private float slideLevelX = 0.5f;
     private float slideLevelY = 0.5f;
     private float slideOpposition = -0.07f;
@@ -18,7 +20,10 @@ public class Mallet{
 
     private BoundingBox board;
 
-    public boolean isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
+    public boolean isMovingUp;
+    public boolean isMovingDown;
+    public boolean isMovingLeft;
+    public boolean isMovingRight;
 
     public Mallet (int posX, int posY,int field) {
 
@@ -77,8 +82,8 @@ public class Mallet{
 			this.velocityX = -0.5f; //if mallet hit right border to bounce
 		}
 		//if mallet X is less than allowed - put mallet at left border;
-		if(this.posX<this.board.getLeftX()){
-			this.posX=this.board.getLeftX() + 1;
+		if(this.posX < this.board.getLeftX()){
+			this.posX = this.board.getLeftX() + 1;
 			this.velocityX = 0.5f; //if mallet hit left border to bounce
 		}
 		// if mallet y is less than allowed( is above board) put it at top border;
@@ -99,9 +104,7 @@ public class Mallet{
 
 			//Check if actual collision occurred
 			if (distance < radius + puckRadius) {
-
 				double dx, dy, fx, fy;
-
 				dx = puckX - playerX; // distance between centers in x
 				dy = puckY - playerY; // distance between centers in y
 
@@ -144,6 +147,7 @@ public class Mallet{
 				playerY + radius + puckRadius > puckY
 				&& playerY < puckY + radius + puckRadius;
 	}
+
 	private void move() {
 		//New Moving Method -> Have Other Minor Bugs -> Code is unclean
 
@@ -169,49 +173,13 @@ public class Mallet{
 
 		if(GameEngine.puck.isInCorner()) {
 			if (GameEngine.puck.isInTopLeftCorner()) {
-				if (this.posY <= GameEngine.puck.board.getTopY() + 2 * GameEngine.puck.getRadius()
-						&& this.posX <= GameEngine.puck.board.getLeftX() + 2 * GameEngine.puck.getRadius()) {
-					GameEngine.puck.setVelocityX(1);
-					GameEngine.puck.setVelocityY(1);
-					this.posX += 0.5f;
-					this.posY += 0.5f;
-				} else {
-					this.posX += this.velocityX;
-					this.posY += this.velocityY;
-				}
+				isPuckInTopLeftCorner();
 			} else if (GameEngine.puck.isInBottomLeftCorner()) {
-				if (this.posY + 2 * this.radius >= GameEngine.puck.board.getBottomY() - 2 * GameEngine.puck.getRadius()
-						&& this.posX <= GameEngine.puck.board.getLeftX() + 2 * GameEngine.puck.getRadius()) {
-					GameEngine.puck.setVelocityX(1);
-					GameEngine.puck.setVelocityY(-1);
-					this.posX += 0.5f;
-					this.posY -= 0.5f;
-				} else {
-					this.posX += this.velocityX;
-					this.posY += this.velocityY;
-				}
+				isPuckInBottomLeftCorner();
 			} else if (GameEngine.puck.isInTopRightCorner()) {
-				if (this.posY <= GameEngine.puck.board.getTopY() + 2 * GameEngine.puck.getRadius() - 4
-						&& this.posX + 2 * this.radius >= GameEngine.puck.board.getRightX() - 2 * GameEngine.puck.getRadius() + 4) {
-					GameEngine.puck.setVelocityX(-1);
-					GameEngine.puck.setVelocityY(1);
-					this.posX -= 0.5f;
-					this.posY += 0.5f;
-				} else {
-					this.posX += this.velocityX;
-					this.posY += this.velocityY;
-				}
+				isPuckInTopRightCorner();
 			} else if (GameEngine.puck.isInBottomRightCorner()) {
-				if (this.posY + 2*this.radius >= GameEngine.puck.board.getBottomY() - 2 * GameEngine.puck.getRadius() + 4
-						&& this.posX + 2 * this.radius >= GameEngine.puck.board.getRightX() - 2 * GameEngine.puck.getRadius() + 4) {
-					GameEngine.puck.setVelocityX(-1);
-					GameEngine.puck.setVelocityY(-1);
-					this.posX -= 0.5f;
-					this.posY -= 0.5f;
-				} else {
-					this.posX += this.velocityX;
-					this.posY += this.velocityY;
-				}
+				isPuckInBottomRightCorner();
 			} else {
 				this.posX += this.velocityX;
 				this.posY += this.velocityY;
@@ -220,11 +188,53 @@ public class Mallet{
 			this.posY += this.velocityY;
 			this.posX += this.velocityX;
 		}
+	}
 
-		//->> THIS IS OUR OLD MOVE METHOD ->> HAD BUG IN CORNERS OVERLAPPING PUCK
-        //Moving X and Y with the velocity without any checks
-		//this.posY += this.velocityY;
-		//this.posX += this.velocityX;
+	private void moveFromCorner(float positionX, float positionY, double velocityX, double velocityY) {
+		GameEngine.puck.setVelocityX(velocityX);
+		GameEngine.puck.setVelocityY(velocityY);
+		this.posX += positionX;
+		this.posY += positionY;
+	}
+
+	private void isPuckInBottomRightCorner() {
+		if (this.posY + 2 * this.radius >= GameEngine.puck.board.getBottomY() - 2 * GameEngine.puck.getRadius() + 4
+				&& this.posX + 2 * this.radius >= GameEngine.puck.board.getRightX() - 2 * GameEngine.puck.getRadius() + 4) {
+			moveFromCorner(-0.5f, -0.5f, -1, -1);
+		} else {
+			this.posX += this.velocityX;
+			this.posY += this.velocityY;
+		}
+	}
+
+	private void isPuckInTopRightCorner() {
+		if (this.posY <= GameEngine.puck.board.getTopY() + 2 * GameEngine.puck.getRadius() - 4
+				&& this.posX + 2 * this.radius >= GameEngine.puck.board.getRightX() - 2 * GameEngine.puck.getRadius() + 4) {
+			moveFromCorner(-0.5f, 0.5f, -1, 1);
+		} else {
+			this.posX += this.velocityX;
+			this.posY += this.velocityY;
+		}
+	}
+
+	private void isPuckInBottomLeftCorner() {
+		if (this.posY + 2 * this.radius >= GameEngine.puck.board.getBottomY() - 2 * GameEngine.puck.getRadius()
+				&& this.posX <= GameEngine.puck.board.getLeftX() + 2 * GameEngine.puck.getRadius()) {
+			moveFromCorner(0.5f, -0.5f, 1, -1);
+		} else {
+			this.posX += this.velocityX;
+			this.posY += this.velocityY;
+		}
+	}
+
+	private void isPuckInTopLeftCorner() {
+		if (this.posY <= GameEngine.puck.board.getTopY() + 2 * GameEngine.puck.getRadius()
+				&& this.posX <= GameEngine.puck.board.getLeftX() + 2 * GameEngine.puck.getRadius()) {
+			moveFromCorner(0.5f, 0.5f, 1, 1);
+		} else {
+			this.posX += this.velocityX;
+			this.posY += this.velocityY;
+		}
 	}
 
 	private void addOpposition() {

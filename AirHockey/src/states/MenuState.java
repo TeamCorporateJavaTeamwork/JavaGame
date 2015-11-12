@@ -14,7 +14,7 @@ public class MenuState {
 		g.setFont(titleFont);
 		g.setColor(Color.LIGHT_GRAY);
 
-		GameEngine.setShouldCountDown(true);
+		GameEngine.setIsCountDownNeeded(true);
 
 		g.drawImage(Assets.header, 428, 32, 352, 49, null);
 		g.drawImage(Assets.headerBackground, 180, 0, 802, 105, null);

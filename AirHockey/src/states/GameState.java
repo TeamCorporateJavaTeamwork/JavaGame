@@ -14,8 +14,8 @@ public class GameState {
 
 		//drawing game field
 		g.drawImage(Assets.background, 180, 80, 800, 600, null);
-		if (GameEngine.isShouldCountDown()) {								//left indent + wholeFieldY + digitWidth, top indent + wholeFieldY - exactPos
-			g.drawImage(numbers.crop(GameEngine.tasks.countDown.position, 0), 490 + 60, 340 -150, null);
+		if (GameEngine.isCountDownNeeded()) {								//left indent + wholeFieldY + digitWidth, top indent + wholeFieldY - exactPos
+			g.drawImage(numbers.crop(GameEngine.tasks.countDown.getPosition(), 0), 490 + 60, 340 -150, null);
 		}
 		//drawing players and puck
 		player1.getMallet().renderLeft(g);
